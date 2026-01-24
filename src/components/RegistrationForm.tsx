@@ -1272,7 +1272,7 @@ const RegistrationForm: React.FC = () => {
                                         boxShadow: '0 4px 12px rgba(0, 78, 224, 0.05)'
                                     }}
                                 >
-                                    <FileText size={15} style={{ marginTop: '-1px' }} />
+                                    <FileText size={14} />
                                     Read Requirements & Accept Rules to register
                                 </button>
                             )}
