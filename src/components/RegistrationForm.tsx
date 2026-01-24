@@ -1078,20 +1078,22 @@ const RegistrationForm: React.FC = () => {
                                         boxShadow: 'inset 0 2px 4px rgba(0,0,0,0.02)'
                                     }}>
                                         <div style={{
-                                            padding: '12px',
+                                            padding: '8px',
                                             background: 'white',
-                                            borderRadius: '24px',
+                                            borderRadius: '20px',
                                             boxShadow: '0 10px 25px -5px rgba(0,0,0,0.1)',
-                                            border: '1px solid #e2e8f0'
+                                            border: '1px solid #e2e8f0',
+                                            maxWidth: '180px',
+                                            width: '100%'
                                         }}>
                                             <img
                                                 src={paymentQr}
                                                 alt="Payment QR Code"
                                                 style={{
-                                                    width: '200px',
-                                                    height: '200px',
+                                                    width: '100%',
+                                                    height: 'auto',
                                                     display: 'block',
-                                                    borderRadius: '16px'
+                                                    borderRadius: '12px'
                                                 }}
                                             />
                                         </div>
