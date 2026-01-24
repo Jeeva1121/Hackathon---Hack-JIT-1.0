@@ -1,7 +1,15 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 
 const Schedule: React.FC = () => {
+    const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
+
+    useEffect(() => {
+        const handleResize = () => setIsMobile(window.innerWidth < 768);
+        window.addEventListener('resize', handleResize);
+        return () => window.removeEventListener('resize', handleResize);
+    }, []);
+
     const timelineData = [
         {
             time: "10:30 AM",
@@ -217,24 +225,24 @@ const Schedule: React.FC = () => {
                                         {/* Unified Content Card */}
                                         <div style={{
                                             display: 'flex',
-                                            flexDirection: 'row',
-                                            gap: '24px',
-                                            alignItems: 'center',
+                                            flexDirection: isMobile ? 'column' : 'row',
+                                            gap: isMobile ? '16px' : '24px',
+                                            alignItems: isMobile ? 'flex-start' : 'center',
                                             background: 'white',
-                                            padding: '24px 32px',
-                                            minHeight: '100px',
+                                            padding: isMobile ? '20px 24px' : '24px 32px',
+                                            minHeight: isMobile ? 'auto' : '100px',
                                             width: '100%',
-                                            borderRadius: '48px',
+                                            borderRadius: isMobile ? '24px' : '48px',
                                             border: '1px solid #f1f5f9',
                                             boxShadow: '0 8px 32px rgba(0, 0, 0, 0.02)',
                                             textAlign: 'left'
                                         }}>
                                             {/* Icon Container */}
                                             <div style={{
-                                                width: '56px',
-                                                height: '56px',
+                                                width: isMobile ? '48px' : '56px',
+                                                height: isMobile ? '48px' : '56px',
                                                 background: '#f8fafc',
-                                                borderRadius: '24px',
+                                                borderRadius: isMobile ? '16px' : '24px',
                                                 display: 'flex',
                                                 alignItems: 'center',
                                                 justifyContent: 'center',

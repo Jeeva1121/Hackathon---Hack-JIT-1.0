@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 
 const sdgs = [
@@ -22,6 +22,14 @@ const sdgs = [
 ];
 
 const InfoSlides: React.FC = () => {
+    const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
+
+    useEffect(() => {
+        const handleResize = () => setIsMobile(window.innerWidth < 768);
+        window.addEventListener('resize', handleResize);
+        return () => window.removeEventListener('resize', handleResize);
+    }, []);
+
     return (
         <section id="about" style={{
             padding: 'clamp(60px, 8vh, 100px) 5%',
@@ -74,7 +82,7 @@ const InfoSlides: React.FC = () => {
                             overflow: 'visible',
                             background: 'white',
                             border: 'none',
-                            borderRadius: '16px',
+                            borderRadius: isMobile ? '12px' : '16px',
                             boxShadow: `0 10px 25px ${sdg.color}60`,
                             transition: 'all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275)',
                             cursor: 'pointer'

@@ -111,7 +111,7 @@ const Navbar: React.FC = () => {
               key={link.name}
               href={link.href}
               onClick={() => setIsMenuOpen(false)}
-              style={{ color: '#0f172a', textDecoration: 'none', fontWeight: 700, fontSize: '18px' }}
+              style={{ color: '#0f172a', textDecoration: 'none', fontWeight: 700, fontSize: '16px' }}
             >
               {link.name}
             </a>
@@ -120,7 +120,7 @@ const Navbar: React.FC = () => {
             to="/register"
             onClick={() => setIsMenuOpen(false)}
             className="btn-primary"
-            style={{ width: '100%', justifyContent: 'center', padding: '14px', fontSize: '16px' }}
+            style={{ width: '100%', justifyContent: 'center', padding: '12px', fontSize: '15px' }}
           >
             Register Now
           </Link>
