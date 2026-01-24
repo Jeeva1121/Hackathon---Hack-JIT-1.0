@@ -1145,7 +1145,7 @@ const RegistrationForm: React.FC = () => {
                                     </p>
                                 </div>
                                 <span style={{
-                                    fontSize: '40px',
+                                    fontSize: '32px',
                                     fontWeight: 900,
                                     background: 'linear-gradient(135deg, #0f172a, #334155)',
                                     WebkitBackgroundClip: 'text',
