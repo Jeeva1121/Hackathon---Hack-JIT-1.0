@@ -21,18 +21,15 @@ const RegistrationForm: React.FC = () => {
     const [accepted, setAccepted] = useState(false);
     const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
     const [showBackButton, setShowBackButton] = useState(true);
-    const [lastScrollY, setLastScrollY] = useState(0);
 
     useEffect(() => {
         const handleResize = () => setIsMobile(window.innerWidth < 768);
         const handleScroll = () => {
-            const currentScrollY = window.scrollY;
-            if (currentScrollY > lastScrollY && currentScrollY > 100) {
+            if (window.scrollY > 20) {
                 setShowBackButton(false);
             } else {
                 setShowBackButton(true);
             }
-            setLastScrollY(currentScrollY);
         };
 
         window.addEventListener('resize', handleResize);
@@ -41,7 +38,7 @@ const RegistrationForm: React.FC = () => {
             window.removeEventListener('resize', handleResize);
             window.removeEventListener('scroll', handleScroll);
         };
-    }, [lastScrollY]);
+    }, []);
 
     const [formData, setFormData] = useState({
         teamName: '',
@@ -534,20 +531,20 @@ const RegistrationForm: React.FC = () => {
                                     </span>
                                 </label>
 
-                                <div style={{ display: 'flex', gap: isMobile ? '10px' : '14px' }}>
+                                <div style={{ display: 'flex', gap: isMobile ? '8px' : '14px' }}>
                                     <button
                                         type="button"
                                         onClick={() => setShowRulesModal(false)}
                                         style={{
                                             flex: 1,
-                                            padding: isMobile ? '12px' : '16px',
+                                            padding: isMobile ? '8px 12px' : '16px',
                                             background: '#f1f5f9',
                                             color: '#64748b',
                                             border: 'none',
                                             borderRadius: '100px',
                                             fontWeight: 700,
                                             cursor: 'pointer',
-                                            fontSize: isMobile ? '13px' : '15px'
+                                            fontSize: isMobile ? '12px' : '15px'
                                         }}
                                     >
                                         Cancel
@@ -557,8 +554,8 @@ const RegistrationForm: React.FC = () => {
                                         onClick={handleAcceptRules}
                                         disabled={!rulesChecked}
                                         style={{
-                                            flex: 2,
-                                            padding: isMobile ? '12px' : '16px',
+                                            flex: 1.5,
+                                            padding: isMobile ? '8px 12px' : '16px',
                                             background: rulesChecked ? 'linear-gradient(135deg, #22c55e 0%, #16a34a 100%)' : '#94a3b8',
                                             color: 'white',
                                             border: 'none',
@@ -566,15 +563,15 @@ const RegistrationForm: React.FC = () => {
                                             fontWeight: 700,
                                             cursor: rulesChecked ? 'pointer' : 'not-allowed',
                                             opacity: rulesChecked ? 1 : 0.7,
-                                            fontSize: '15px',
+                                            fontSize: isMobile ? '12px' : '15px',
                                             display: 'flex',
                                             alignItems: 'center',
                                             justifyContent: 'center',
-                                            gap: '10px',
+                                            gap: isMobile ? '6px' : '10px',
                                             boxShadow: rulesChecked ? '0 8px 24px rgba(34, 197, 94, 0.3)' : 'none'
                                         }}
                                     >
-                                        <CheckCircle size={20} />
+                                        <CheckCircle size={isMobile ? 16 : 20} />
                                         Accept & Continue
                                     </button>
                                 </div>
