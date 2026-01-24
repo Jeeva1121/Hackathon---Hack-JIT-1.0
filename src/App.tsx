@@ -8,6 +8,7 @@ import RegistrationForm from './components/RegistrationForm';
 import Footer from './components/Footer';
 import WelcomeModal from './components/WelcomeModal';
 import AdminDashboard from './components/AdminDashboard';
+import ScrollToTop from './components/ScrollToTop';
 
 function App() {
   return (
@@ -36,6 +37,7 @@ function App() {
           } />
           <Route path="/admin" element={<AdminDashboard />} />
         </Routes>
+        <ScrollToTop />
       </div>
     </Router>
   );
