@@ -35,12 +35,12 @@ const ScrollToTop: React.FC = () => {
                     onClick={scrollToTop}
                     style={{
                         position: 'fixed',
-                        bottom: '40px',
-                        right: '40px',
+                        bottom: '24px',
+                        right: '24px',
                         zIndex: 1000,
-                        width: '56px',
-                        height: '56px',
-                        borderRadius: '20px',
+                        width: '44px',
+                        height: '44px',
+                        borderRadius: '14px',
                         background: 'linear-gradient(135deg, #004ee0, #1883ff)',
                         color: 'white',
                         border: 'none',
@@ -48,14 +48,14 @@ const ScrollToTop: React.FC = () => {
                         display: 'flex',
                         alignItems: 'center',
                         justifyContent: 'center',
-                        boxShadow: '0 10px 25px rgba(0, 78, 224, 0.3)',
-                        transition: 'transform 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+                        boxShadow: '0 8px 20px rgba(0, 78, 224, 0.25)',
+                        transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
                     }}
-                    onMouseOver={(e) => e.currentTarget.style.transform = 'translateY(-5px)'}
+                    onMouseOver={(e) => e.currentTarget.style.transform = 'translateY(-4px)'}
                     onMouseOut={(e) => e.currentTarget.style.transform = 'translateY(0)'}
-                    whileTap={{ scale: 0.9 }}
+                    whileTap={{ scale: 0.95 }}
                 >
-                    <ArrowUp size={24} strokeWidth={3} />
+                    <ArrowUp size={20} strokeWidth={2.5} />
                 </motion.button>
             )}
         </AnimatePresence>
