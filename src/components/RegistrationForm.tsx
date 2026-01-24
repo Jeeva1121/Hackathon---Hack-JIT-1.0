@@ -1082,10 +1082,9 @@ const RegistrationForm: React.FC = () => {
                                             <p style={{
                                                 fontWeight: 900,
                                                 color: '#0f172a',
-                                                fontSize: isMobile ? '15px' : '18px',
+                                                fontSize: isMobile ? '13px' : '18px',
                                                 letterSpacing: '0.01em',
                                                 marginBottom: '6px',
-                                                wordBreak: 'break-all',
                                                 lineHeight: 1.3
                                             }}>prasathkumartvb@okaxis</p>
                                             <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
