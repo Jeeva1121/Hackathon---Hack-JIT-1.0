@@ -925,7 +925,7 @@ const RegistrationForm: React.FC = () => {
                             transition={{ delay: 0.6 }}
                             style={cardStyle}
                         >
-                            {renderSectionHeader("Mentor Details (Optional)", regMentor, true)}
+                            {renderSectionHeader("Mentor Details", regMentor, true)}
                             <div style={{
                                 background: 'linear-gradient(135deg, rgba(241, 245, 249, 0.8), rgba(226, 232, 240, 0.5))',
                                 padding: '16px 20px',
@@ -933,9 +933,7 @@ const RegistrationForm: React.FC = () => {
                                 marginBottom: '24px',
                                 border: '1px solid rgba(203, 213, 225, 0.5)'
                             }}>
-                                <p style={{ color: '#64748b', fontSize: '14px', lineHeight: 1.7 }}>
-                                    If your team has an assigned mentor or faculty guide, you can provide their details here. This section is completely optional.
-                                </p>
+                                If your team has an assigned mentor or faculty guide, you can provide their details here.
                             </div>
                             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '24px' }}>
                                 <div style={{ display: 'flex', flexDirection: 'column' }}>
