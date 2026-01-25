@@ -111,6 +111,40 @@ const sendTeamEmail = async (candidate, type) => {
     }
 };
 
+const sendAdminNotification = async (candidate) => {
+    if (!transporter) return;
+
+    const mailOptions = {
+        from: `"Hackathon System" <${process.env.EMAIL_USER}>`,
+        to: process.env.EMAIL_USER,
+        subject: `🚨 NEW REGISTRATION: ${candidate.teamName}`,
+        html: `
+            <div style="font-family: sans-serif; padding: 20px; border: 1px solid #e2e8f0; border-radius: 12px;">
+                <h2 style="color: #004ee0;">New Team Registered!</h2>
+                <p>A new team has just signed up for the hackathon.</p>
+                <div style="background: #f8fafc; padding: 15px; border-radius: 8px; margin: 20px 0;">
+                    <p><strong>Team Name:</strong> ${candidate.teamName}</p>
+                    <p><strong>Leader:</strong> ${candidate.leader.name} (${candidate.leader.phone})</p>
+                    <p><strong>Transaction ID:</strong> ${candidate.transactionId}</p>
+                    <p><strong>Total Fee:</strong> ₹${candidate.totalFee}</p>
+                </div>
+                <p>Please log in to the <strong>Staff Portal</strong> to verify their payment.</p>
+                <a href="${process.env.NODE_ENV === 'production' ? 'https://hackathon-hack-jit-1-0.vercel.app/admin' : 'http://localhost:5173/admin'}" 
+                   style="display: inline-block; padding: 10px 20px; background: #004ee0; color: white; text-decoration: none; border-radius: 8px; font-weight: bold;">
+                   Open Admin Panel
+                </a>
+            </div>
+        `
+    };
+
+    try {
+        await transporter.sendMail(mailOptions);
+        console.log(`Admin alerted for team: ${candidate.teamName}`);
+    } catch (error) {
+        console.error('Admin alert failed:', error);
+    }
+};
+
 
 app.post('/api/register', async (req, res) => {
     console.log('Registration request received:', req.body.teamName);
@@ -144,9 +178,11 @@ app.post('/api/register', async (req, res) => {
         await addDoc(candidatesRef, candidateData);
         console.log('Candidate saved successfully');
 
-        console.log('Sending email...');
-        // We use the data we just created for the email
+        console.log('Sending emails...');
+        // Send confirmation to team
         sendTeamEmail(candidateData, 'Confirmation');
+        // Send alert to admin
+        sendAdminNotification(candidateData);
 
         console.log('Sending success response');
         res.status(201).json({ message: 'Success! Confirmation email sent to both members.' });
