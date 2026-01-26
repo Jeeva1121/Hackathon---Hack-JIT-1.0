@@ -186,9 +186,9 @@ app.post('/api/register', async (req, res) => {
 
         console.log('Sending emails...');
         // Send confirmation to team
-        sendTeamEmail(candidateData, 'Confirmation');
+        await sendTeamEmail(candidateData, 'Confirmation');
         // Send alert to admin
-        sendAdminNotification(candidateData);
+        await sendAdminNotification(candidateData);
 
         console.log('Sending success response');
         res.status(201).json({ message: 'Success! Confirmation email sent to both members.' });
