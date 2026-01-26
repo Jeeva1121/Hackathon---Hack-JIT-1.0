@@ -57,12 +57,14 @@ if (emailConfigured) {
 const sendTeamEmail = async (candidate, type) => {
     // Skip if email not configured
     if (!transporter) {
-        console.log(`⚠️ Skipping email (${type}) - email not configured`);
+        console.log(`⚠️ Skipping email (${type}) - email not configured. Check EMAIL_USER/PASS`);
         return;
     }
 
     const recipients = [candidate.leader.email, candidate.member.email];
     const isVerified = type === 'Verified';
+
+    console.log(`Attempting to send ${type} email to: ${recipients.join(', ')}`);
 
     const subject = isVerified ? `Registration Verified! - ${candidate.teamName}` : `Registration Received - ${candidate.teamName}`;
     const headerColor = isVerified ? '#16a34a' : '#002e73';
@@ -107,10 +109,11 @@ const sendTeamEmail = async (candidate, type) => {
     };
 
     try {
-        await transporter.sendMail(mailOptions);
-        console.log(`Email (${type}) sent to team ${candidate.teamName}`);
+        const info = await transporter.sendMail(mailOptions);
+        console.log(`Email (${type}) sent successfully to team ${candidate.teamName}. Message ID: ${info.messageId}`);
     } catch (error) {
-        console.error('Email failed:', error);
+        console.error(`ERROR: Failed to send ${type} email to ${candidate.teamName}`);
+        console.error('Error details:', error);
     }
 };
 
