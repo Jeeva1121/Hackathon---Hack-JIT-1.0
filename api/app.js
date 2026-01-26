@@ -97,6 +97,9 @@ const sendTeamEmail = async (candidate, type) => {
                 `}
 
                 <p style="margin-top: 30px;">Best Regards,<br/><strong>Team Hack@JIT</strong></p>
+                <p style="margin-top: 10px; font-size: 14px; color: #475569;">
+                    Have questions? <a href="mailto:hackjit01@gmail.com" style="color: #004ee0; text-decoration: none; font-weight: bold;">Reply to this email</a> or contact us at hackjit01@gmail.com.
+                </p>
                 <hr style="border: none; border-top: 1px solid #e2e8f0; margin: 20px 0;" />
                 <p style="font-size: 12px; color: #64748b; text-align: center;">This is an automated message. Please do not reply to this email.</p>
             </div>
