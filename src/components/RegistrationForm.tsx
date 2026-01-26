@@ -1077,6 +1077,37 @@ const RegistrationForm: React.FC = () => {
                         >
                             {renderSectionHeader("Payment & Verification", regPayment, true)}
                             <div style={{
+                                marginTop: isMobile ? '20px' : '28px',
+                                padding: isMobile ? '16px 20px' : '28px',
+                                background: 'linear-gradient(135deg, #f8fafc, #f1f5f9)',
+                                borderRadius: isMobile ? '20px' : '28px',
+                                display: 'flex',
+                                justifyContent: 'space-between',
+                                alignItems: 'center',
+                                border: '1px solid rgba(226, 232, 240, 0.8)',
+                                flexWrap: 'wrap',
+                                gap: '12px',
+                                marginBottom: '24px'
+                            }}>
+                                <div>
+                                    <p style={{ fontSize: isMobile ? '13px' : '15px', color: '#64748b', fontWeight: 600 }}>Total Payable Amount</p>
+                                    <p style={{ fontSize: isMobile ? '11px' : '13px', color: '#94a3b8', marginTop: '4px' }}>
+                                        Base: ₹250 × {formData.member.name.trim() ? 2 : 1}
+                                        {(formData.leaderAccommodation === 'Yes' || formData.memberAccommodation === 'Yes') && (
+                                            <> + Accom: ₹200 × {(formData.leaderAccommodation === 'Yes' ? 1 : 0) + (formData.member.name.trim() && formData.memberAccommodation === 'Yes' ? 1 : 0)}</>
+                                        )}
+                                    </p>
+                                </div>
+                                <span style={{
+                                    fontSize: isMobile ? '24px' : '32px',
+                                    fontWeight: 900,
+                                    background: 'linear-gradient(135deg, #0f172a, #334155)',
+                                    WebkitBackgroundClip: 'text',
+                                    WebkitTextFillColor: 'transparent'
+                                }}>₹{formData.totalFee}</span>
+                            </div>
+
+                            <div style={{
                                 background: 'linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%)',
                                 padding: '28px',
                                 borderRadius: '28px',
@@ -1208,36 +1239,6 @@ const RegistrationForm: React.FC = () => {
                             </div>
 
                             {renderInput("Transaction ID / Reference Number", "transactionId", null, "text", "12-digit UPI Ref No (e.g. 4029...)")}
-
-                            <div style={{
-                                marginTop: isMobile ? '20px' : '28px',
-                                padding: isMobile ? '16px 20px' : '28px',
-                                background: 'linear-gradient(135deg, #f8fafc, #f1f5f9)',
-                                borderRadius: isMobile ? '20px' : '28px',
-                                display: 'flex',
-                                justifyContent: 'space-between',
-                                alignItems: 'center',
-                                border: '1px solid rgba(226, 232, 240, 0.8)',
-                                flexWrap: 'wrap',
-                                gap: '12px'
-                            }}>
-                                <div>
-                                    <p style={{ fontSize: isMobile ? '13px' : '15px', color: '#64748b', fontWeight: 600 }}>Total Payable Amount</p>
-                                    <p style={{ fontSize: isMobile ? '11px' : '13px', color: '#94a3b8', marginTop: '4px' }}>
-                                        Base: ₹250 × {formData.member.name.trim() ? 2 : 1}
-                                        {(formData.leaderAccommodation === 'Yes' || formData.memberAccommodation === 'Yes') && (
-                                            <> + Accom: ₹200 × {(formData.leaderAccommodation === 'Yes' ? 1 : 0) + (formData.member.name.trim() && formData.memberAccommodation === 'Yes' ? 1 : 0)}</>
-                                        )}
-                                    </p>
-                                </div>
-                                <span style={{
-                                    fontSize: isMobile ? '24px' : '32px',
-                                    fontWeight: 900,
-                                    background: 'linear-gradient(135deg, #0f172a, #334155)',
-                                    WebkitBackgroundClip: 'text',
-                                    WebkitTextFillColor: 'transparent'
-                                }}>₹{formData.totalFee}</span>
-                            </div>
                         </motion.div>
 
                         {/* Submit Section */}
