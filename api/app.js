@@ -200,9 +200,24 @@ const auth = (req, res, next) => {
 
 app.post('/api/admin/login', (req, res) => {
     const { password } = req.body;
-    if (password === process.env.ADMIN_PASSWORD) res.json({ success: true, role: 'admin', token: password });
-    else if (password === process.env.COORDINATOR_PASSWORD) res.json({ success: true, role: 'coordinator', token: password });
-    else res.status(401).json({ success: false });
+    console.log('Login attempt received. Password length:', password ? password.length : 'N/A');
+    console.log('Expected ADMIN_PASSWORD length:', process.env.ADMIN_PASSWORD ? process.env.ADMIN_PASSWORD.length : 'N/A');
+
+    // Trim whitespace to avoid copy-paste errors
+    const cleanPassword = password ? password.trim() : '';
+
+    if (cleanPassword === process.env.ADMIN_PASSWORD) {
+        console.log('Admin login successful');
+        res.json({ success: true, role: 'admin', token: process.env.ADMIN_PASSWORD });
+    }
+    else if (cleanPassword === process.env.COORDINATOR_PASSWORD) {
+        console.log('Coordinator login successful');
+        res.json({ success: true, role: 'coordinator', token: process.env.COORDINATOR_PASSWORD });
+    }
+    else {
+        console.log('Login failed. Provided:', cleanPassword);
+        res.status(401).json({ success: false, error: 'Invalid Credentials' });
+    }
 });
 
 app.patch('/api/candidates/:id/status', auth, async (req, res) => {

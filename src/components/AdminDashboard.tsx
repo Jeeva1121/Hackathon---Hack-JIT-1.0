@@ -86,10 +86,18 @@ const AdminDashboard: React.FC = () => {
 
     if (!isAuthenticated) {
         return (
-            <div style={{ height: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', background: '#f1f5f9' }}>
-                <div style={{ background: 'white', padding: '40px', borderRadius: '24px', boxShadow: '0 20px 25px -5px rgba(0,0,0,0.1)', width: '400px', textAlign: 'center' }}>
+            <div style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', background: '#f1f5f9', padding: '20px' }}>
+                <div style={{
+                    background: 'white',
+                    padding: 'clamp(30px, 5vw, 40px)',
+                    borderRadius: '24px',
+                    boxShadow: '0 20px 25px -5px rgba(0,0,0,0.1)',
+                    width: '100%',
+                    maxWidth: '400px',
+                    textAlign: 'center'
+                }}>
                     <Lock size={32} style={{ color: 'var(--primary)', marginBottom: '20px' }} />
-                    <h2 style={{ marginBottom: '8px' }}>Staff Portal</h2>
+                    <h2 style={{ marginBottom: '8px', fontSize: '24px' }}>Staff Portal</h2>
                     <p style={{ color: '#64748b', fontSize: '14px', marginBottom: '24px' }}>Enter access code to manage teams</p>
                     <form onSubmit={handleLogin}>
                         <input
@@ -97,7 +105,16 @@ const AdminDashboard: React.FC = () => {
                             autoFocus
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
-                            style={{ width: '100%', padding: '16px', borderRadius: '12px', border: '2px solid #e2e8f0', marginBottom: '16px', fontSize: '16px', textAlign: 'center', letterSpacing: '4px' }}
+                            style={{
+                                width: '100%',
+                                padding: '16px',
+                                borderRadius: '12px',
+                                border: '2px solid #e2e8f0',
+                                marginBottom: '16px',
+                                fontSize: '16px',
+                                textAlign: 'center',
+                                letterSpacing: '4px'
+                            }}
                             placeholder="••••••"
                         />
                         {error && <p style={{ color: '#ef4444', marginBottom: '16px', fontSize: '14px', fontWeight: 600 }}>{error}</p>}
