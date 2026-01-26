@@ -865,7 +865,7 @@ const RegistrationForm: React.FC = () => {
                                 </p>
                                 <ul style={{ paddingLeft: '20px', margin: '0 0 16px 0', display: 'flex', flexDirection: 'column', gap: '6px' }}>
                                     <li>The <strong>₹200 accommodation fee</strong> is applicable <strong>only for Thursday night stay</strong> (pre-event accommodation).</li>
-                                    <li>Accommodation for <strong>Friday and Saturday nights</strong> is already included in the event registration and does <strong>not require any additional payment</strong>.</li>
+                                    <li>Accommodation for <strong>Friday night</strong> is already included in the <strong>registration fee</strong> and does <strong>not require any additional payment</strong>.</li>
                                     <li>Please select <strong>“Need Accommodation”</strong> only if you require <strong>Thursday night stay</strong>.</li>
                                 </ul>
                             </div>
