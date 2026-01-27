@@ -290,7 +290,11 @@ app.get('/api/candidates/export', auth, async (req, res) => {
                 'Mentor Phone': mentor.phone || 'Not Provided',
                 'Mentor Gender': mentor.gender || 'Not Provided',
                 'Mentor Designation': mentor.designation || 'Not Provided',
-                'Mentor Organization': mentor.organization || 'Not Provided'
+                'Mentor Organization': mentor.organization || 'Not Provided',
+                'Leader Accomm.': c.leaderAccommodation || 'No',
+                'Member Accomm.': c.memberAccommodation || 'No',
+                'Arrival Date': c.expectedArrivalDate || 'N/A',
+                'Arrival Time': c.expectedArrivalTime || 'N/A'
             };
         });
 
