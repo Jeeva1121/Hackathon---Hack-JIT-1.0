@@ -613,7 +613,7 @@ const RegistrationForm: React.FC = () => {
                                 display: 'inline-flex',
                                 alignItems: 'center',
                                 gap: '8px',
-                                padding: '10px 20px',
+                                padding: isMobile ? '8px 14px' : '10px 24px',
                                 background: 'rgba(255, 255, 255, 1)',
                                 backdropFilter: 'blur(10px)',
                                 borderRadius: '100px',
@@ -621,13 +621,13 @@ const RegistrationForm: React.FC = () => {
                                 color: '#475569',
                                 textDecoration: 'none',
                                 fontWeight: 700,
-                                fontSize: '13px',
+                                fontSize: isMobile ? '11px' : '13px',
                                 transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
                                 boxShadow: '0 8px 24px rgba(0, 0, 0, 0.05)',
                                 overflow: 'hidden',
                                 position: 'relative'
                             }}>
-                                <ArrowLeft size={16} />
+                                <ArrowLeft size={isMobile ? 14 : 16} />
                                 Back to Home
                             </Link>
                         </motion.div>
@@ -649,14 +649,14 @@ const RegistrationForm: React.FC = () => {
                             gap: '12px',
                             background: 'white',
                             border: '1px solid rgba(239, 68, 68, 0.2)',
-                            padding: '12px 24px',
+                            padding: isMobile ? '8px 16px' : '12px 24px',
                             borderRadius: '100px', // Pill shape for deadline
-                            marginBottom: '40px',
+                            marginBottom: isMobile ? '24px' : '40px',
                             boxShadow: '0 10px 30px -5px rgba(239, 68, 68, 0.1), 0 0 0 1px rgba(239, 68, 68, 0.1) inset'
                         }}>
-                            <img src={sirenIcon} alt="Siren" style={{ width: '24px', height: '24px', animation: 'pulse 2s infinite', objectFit: 'contain' }} />
+                            <img src={sirenIcon} alt="Siren" style={{ width: isMobile ? '18px' : '24px', height: isMobile ? '18px' : '24px', animation: 'pulse 2s infinite', objectFit: 'contain' }} />
                             <div style={{ textAlign: 'left' }}>
-                                <div style={{ color: '#0f172a', fontWeight: 800, fontSize: '13px', textTransform: 'uppercase', letterSpacing: '0.04em' }}>Registration Closes: <span style={{ color: '#ef4444' }}>Feb 4</span></div>
+                                <div style={{ color: '#0f172a', fontWeight: 800, fontSize: isMobile ? '10px' : '13px', textTransform: 'uppercase', letterSpacing: '0.04em' }}>Registration Closes: <span style={{ color: '#ef4444' }}>Feb 4</span></div>
                             </div>
                         </div>
 
