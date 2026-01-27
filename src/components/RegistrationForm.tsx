@@ -12,6 +12,7 @@ import regMentor from '../assets/reg_mentor.png';
 import regPayment from '../assets/reg_payment.png';
 import paymentQr from '../assets/payment_qr.jpg';
 import websiteBg from '../assets/premium_clean_4k.png';
+import sirenIcon from '../assets/siren_icon.png';
 
 const RegistrationForm: React.FC = () => {
     const [focusedField, setFocusedField] = useState<string | null>(null);
@@ -148,33 +149,39 @@ const RegistrationForm: React.FC = () => {
 
     const inputStyle = (fieldName: string) => ({
         width: '100%',
-        padding: isMobile ? '10px 16px' : '18px 24px',
-        borderRadius: isMobile ? '28px' : '32px',
+        padding: isMobile ? '12px 20px' : '20px 28px',
+        borderRadius: '100px', // Fully rounded pill inputs
         border: focusedField === fieldName
             ? '2px solid transparent'
-            : '2px solid rgba(226, 232, 240, 0.8)',
+            : '2px solid rgba(226, 232, 240, 0.5)',
         background: focusedField === fieldName
-            ? 'linear-gradient(white, white) padding-box, linear-gradient(135deg, #004ee0, #22c55e) border-box'
-            : 'rgba(255, 255, 255, 0.9)',
-        fontSize: isMobile ? '13px' : '16px',
-        transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+            ? 'linear-gradient(white, white) padding-box, linear-gradient(135deg, #2563eb, #22c55e) border-box'
+            : 'white',
+        fontSize: isMobile ? '14px' : '16px',
+        transition: 'all 0.4s cubic-bezier(0.16, 1, 0.3, 1)',
         outline: 'none',
         boxShadow: focusedField === fieldName
-            ? '0 8px 32px rgba(0, 78, 224, 0.15)'
-            : '0 2px 8px rgba(0, 0, 0, 0.02)',
-        fontWeight: 500
+            ? '0 10px 40px -10px rgba(37, 99, 235, 0.15), 0 0 0 4px rgba(37, 99, 235, 0.05)'
+            : '0 4px 12px rgba(0, 0, 0, 0.02)',
+        fontWeight: 500,
+        color: '#1e293b'
     });
 
     const cardStyle = {
-        background: 'rgba(255, 255, 255, 0.8)',
-        backdropFilter: 'blur(24px)',
-        padding: isMobile ? '18px' : 'clamp(24px, 4vw, 40px)',
-        borderRadius: '24px',
+        background: 'rgba(255, 255, 255, 0.7)',
+        backdropFilter: 'blur(32px) saturate(150%)',
+        padding: isMobile ? '24px' : 'clamp(32px, 5vw, 56px)',
+        borderRadius: isMobile ? '36px' : '56px', // Ultra-rounded corners as requested
         border: '1px solid rgba(255, 255, 255, 0.8)',
-        marginBottom: isMobile ? '16px' : '24px',
-        boxShadow: '0 20px 60px rgba(0, 78, 224, 0.04), 0 0 0 1px rgba(0, 78, 224, 0.02)',
+        marginBottom: isMobile ? '24px' : '40px',
+        boxShadow: `
+            0 20px 50px -10px rgba(0, 78, 224, 0.08),
+            0 10px 30px -5px rgba(0, 0, 0, 0.04),
+            0 0 0 1px rgba(255, 255, 255, 0.5) inset
+        `,
         position: 'relative' as const,
-        overflow: 'hidden'
+        overflow: 'hidden',
+        transition: 'transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275)',
     };
 
     const renderInput = (label: string, field: string, parent: 'leader' | 'member' | null, type: string = 'text', placeholder: string = '', isRequired: boolean = true) => {
@@ -222,40 +229,35 @@ const RegistrationForm: React.FC = () => {
     };
 
     const renderSectionHeader = (title: string, Icon: any, isImage: boolean = false) => (
-        <div style={{ display: 'flex', alignItems: 'center', gap: isMobile ? '12px' : '20px', marginBottom: isMobile ? '28px' : '40px' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: isMobile ? '16px' : '24px', marginBottom: isMobile ? '32px' : '48px' }}>
             <div style={{
-                padding: isMobile ? '8px' : '12px',
-                background: 'linear-gradient(135deg, rgba(255, 255, 255, 0.95), rgba(255, 255, 255, 0.8))',
-                backdropFilter: 'blur(10px)',
-                borderRadius: isMobile ? '14px' : '20px',
-                color: 'var(--primary)',
+                padding: isMobile ? '10px' : '14px',
+                background: 'linear-gradient(135deg, #ffffff 0%, #f1f5f9 100%)',
+                borderRadius: '50%', // Circular icons for cleaner look
+                color: '#2563eb',
                 border: '1px solid rgba(255, 255, 255, 1)',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
-                width: isMobile ? '40px' : '52px',
-                height: isMobile ? '40px' : '52px',
-                boxShadow: '0 10px 25px rgba(0, 78, 224, 0.08)',
-                position: 'relative'
+                width: isMobile ? '44px' : '60px',
+                height: isMobile ? '44px' : '60px',
+                boxShadow: '0 12px 30px -10px rgba(0, 78, 224, 0.15)',
+                position: 'relative',
+                flexShrink: 0
             }}>
-                <div style={{
-                    position: 'absolute',
-                    inset: '-4px',
-                    borderRadius: isMobile ? '16px' : '22px',
-                    padding: '2px',
-                    background: 'linear-gradient(135deg, rgba(0, 78, 224, 0.1), rgba(34, 197, 94, 0.1))',
-                    mask: 'linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)',
-                    WebkitMaskComposite: 'xor',
-                    maskComposite: 'exclude',
-                    pointerEvents: 'none'
-                }} />
                 {isImage ? (
-                    <img src={Icon} alt={title} style={{ width: isMobile ? '20px' : '26px', height: isMobile ? '20px' : '26px', objectFit: 'contain' }} />
+                    <img src={Icon} alt={title} style={{ width: isMobile ? '22px' : '28px', height: isMobile ? '22px' : '28px', objectFit: 'contain' }} />
                 ) : (
-                    <Icon size={isMobile ? 18 : 24} />
+                    <Icon size={isMobile ? 20 : 26} />
                 )}
             </div>
-            <h3 style={{ fontSize: isMobile ? '18px' : '24px', fontWeight: 900, color: '#0f172a', letterSpacing: '-0.03em' }}>{title}</h3>
+            <h3 style={{
+                fontSize: isMobile ? '20px' : '28px',
+                fontWeight: 900,
+                color: '#0f172a',
+                letterSpacing: '-0.03em',
+                lineHeight: 1.2
+            }}>{title}</h3>
         </div>
     );
 
@@ -645,22 +647,21 @@ const RegistrationForm: React.FC = () => {
                             display: 'inline-flex',
                             alignItems: 'center',
                             gap: '12px',
-                            background: '#fef2f2',
-                            border: '1px solid #fecaca',
-                            padding: '10px 20px',
-                            borderRadius: '16px',
-                            marginBottom: '32px',
-                            boxShadow: '0 4px 12px rgba(220, 38, 38, 0.1)'
+                            background: 'white',
+                            border: '1px solid rgba(239, 68, 68, 0.2)',
+                            padding: '12px 24px',
+                            borderRadius: '100px', // Pill shape for deadline
+                            marginBottom: '40px',
+                            boxShadow: '0 10px 30px -5px rgba(239, 68, 68, 0.1), 0 0 0 1px rgba(239, 68, 68, 0.1) inset'
                         }}>
-                            <span style={{ fontSize: '20px' }}>🚨</span>
+                            <img src={sirenIcon} alt="Siren" style={{ width: '24px', height: '24px', animation: 'pulse 2s infinite', objectFit: 'contain' }} />
                             <div style={{ textAlign: 'left' }}>
-                                <div style={{ color: '#b91c1c', fontWeight: 800, fontSize: '13px', textTransform: 'uppercase', letterSpacing: '0.02em', lineHeight: 1.2 }}>Registration Closes on February 5</div>
-                                <div style={{ color: '#ef4444', fontSize: '12px', fontWeight: 600, marginTop: '2px' }}>Secure your spot! Late entries not accepted.</div>
+                                <div style={{ color: '#0f172a', fontWeight: 800, fontSize: '13px', textTransform: 'uppercase', letterSpacing: '0.04em' }}>Registration Closes: <span style={{ color: '#ef4444' }}>Feb 4</span></div>
                             </div>
                         </div>
 
                         <h1 style={{
-                            fontSize: 'clamp(36px, 6vw, 56px)',
+                            fontSize: 'clamp(32px, 5vw, 48px)', // Slightly reduced from 36px, 6vw, 56px
                             fontWeight: 900,
                             marginBottom: '20px',
                             background: 'linear-gradient(135deg, #0f172a, #334155)',
@@ -852,13 +853,13 @@ const RegistrationForm: React.FC = () => {
                             <div style={{
                                 background: 'linear-gradient(135deg, #fffbeb, #fef3c7)',
                                 border: '1px solid #fcd34d',
-                                borderRadius: '16px',
-                                padding: isMobile ? '16px' : '20px',
-                                marginBottom: '24px',
-                                fontSize: isMobile ? '13px' : '14px',
+                                borderRadius: '32px', // More rounded
+                                padding: isMobile ? '24px' : '32px',
+                                marginBottom: '32px',
+                                fontSize: isMobile ? '14px' : '15px',
                                 color: '#92400e',
-                                lineHeight: '1.6',
-                                boxShadow: '0 4px 12px rgba(251, 191, 36, 0.1)'
+                                lineHeight: '1.7',
+                                boxShadow: '0 8px 24px rgba(251, 191, 36, 0.08)'
                             }}>
                                 <p style={{ marginBottom: '12px' }}>
                                     The hackathon event takes place on <strong>Friday and Saturday</strong>.
@@ -877,10 +878,9 @@ const RegistrationForm: React.FC = () => {
                                     border: '1px solid rgba(236, 72, 153, 0.1)'
                                 }}>
                                     <p style={{ color: '#0f172a', fontSize: '15px', fontWeight: 700, marginBottom: '16px', display: 'flex', alignItems: 'center', gap: '10px' }}>
-                                        <div style={{ width: '8px', height: '8px', borderRadius: '50%', background: '#ec4899' }}></div>
                                         ACCOMMODATION FOR TEAM MEMBER 1 ({formData.leader.name || 'Team Member 1'})
                                     </p>
-                                    <div style={{ display: 'flex', gap: '12px' }}>
+                                    <div style={{ display: 'flex', gap: '16px' }}>
                                         {['Yes', 'No'].map(opt => (
                                             <button
                                                 key={opt}
@@ -888,19 +888,22 @@ const RegistrationForm: React.FC = () => {
                                                 onClick={() => setFormData(prev => ({ ...prev, leaderAccommodation: opt as any }))}
                                                 style={{
                                                     flex: 1,
-                                                    padding: '14px 20px',
-                                                    borderRadius: '16px',
+                                                    padding: '16px 24px',
+                                                    borderRadius: '100px', // Pill shape
                                                     border: formData.leaderAccommodation === opt
-                                                        ? '2px solid #ec4899'
+                                                        ? '2px solid transparent'
                                                         : '2px solid rgba(226, 232, 240, 0.8)',
                                                     background: formData.leaderAccommodation === opt
-                                                        ? 'rgba(236, 72, 153, 0.05)'
+                                                        ? 'linear-gradient(135deg, #ec4899, #f43f5e)'
                                                         : 'white',
-                                                    fontWeight: 700,
+                                                    fontWeight: 800,
                                                     cursor: 'pointer',
-                                                    transition: 'all 0.2s ease',
+                                                    transition: 'all 0.4s cubic-bezier(0.16, 1, 0.3, 1)',
                                                     fontSize: '14px',
-                                                    color: formData.leaderAccommodation === opt ? '#db2777' : '#64748b',
+                                                    color: formData.leaderAccommodation === opt ? 'white' : '#64748b',
+                                                    boxShadow: formData.leaderAccommodation === opt
+                                                        ? '0 10px 25px -5px rgba(236, 72, 153, 0.4)'
+                                                        : '0 4px 12px rgba(0,0,0,0.03)'
                                                 }}
                                             >
                                                 {opt === 'Yes' ? '✓ Need' : '✗ No'}
@@ -917,10 +920,9 @@ const RegistrationForm: React.FC = () => {
                                         border: '1px solid rgba(236, 72, 153, 0.1)'
                                     }}>
                                         <p style={{ color: '#0f172a', fontSize: '15px', fontWeight: 700, marginBottom: '16px', display: 'flex', alignItems: 'center', gap: '10px' }}>
-                                            <div style={{ width: '8px', height: '8px', borderRadius: '50%', background: '#ec4899' }}></div>
                                             ACCOMMODATION FOR TEAM MEMBER 2 ({formData.member.name || 'Team Member 2'})
                                         </p>
-                                        <div style={{ display: 'flex', gap: '12px' }}>
+                                        <div style={{ display: 'flex', gap: '16px' }}>
                                             {['Yes', 'No'].map(opt => (
                                                 <button
                                                     key={opt}
@@ -928,19 +930,22 @@ const RegistrationForm: React.FC = () => {
                                                     onClick={() => setFormData(prev => ({ ...prev, memberAccommodation: opt as any }))}
                                                     style={{
                                                         flex: 1,
-                                                        padding: '14px 20px',
-                                                        borderRadius: '16px',
+                                                        padding: '16px 24px',
+                                                        borderRadius: '100px', // Pill shape
                                                         border: formData.memberAccommodation === opt
-                                                            ? '2px solid #ec4899'
+                                                            ? '2px solid transparent'
                                                             : '2px solid rgba(226, 232, 240, 0.8)',
                                                         background: formData.memberAccommodation === opt
-                                                            ? 'rgba(236, 72, 153, 0.05)'
+                                                            ? 'linear-gradient(135deg, #ec4899, #f43f5e)'
                                                             : 'white',
-                                                        fontWeight: 700,
+                                                        fontWeight: 800,
                                                         cursor: 'pointer',
-                                                        transition: 'all 0.2s ease',
+                                                        transition: 'all 0.4s cubic-bezier(0.16, 1, 0.3, 1)',
                                                         fontSize: '14px',
-                                                        color: formData.memberAccommodation === opt ? '#db2777' : '#64748b',
+                                                        color: formData.memberAccommodation === opt ? 'white' : '#64748b',
+                                                        boxShadow: formData.memberAccommodation === opt
+                                                            ? '0 10px 25px -5px rgba(236, 72, 153, 0.4)'
+                                                            : '0 4px 12px rgba(0,0,0,0.03)'
                                                     }}
                                                 >
                                                     {opt === 'Yes' ? '✓ Need' : '✗ No'}
@@ -965,13 +970,17 @@ const RegistrationForm: React.FC = () => {
                         >
                             {renderSectionHeader("Mentor Details", regMentor, true)}
                             <div style={{
-                                background: 'linear-gradient(135deg, rgba(241, 245, 249, 0.8), rgba(226, 232, 240, 0.5))',
-                                padding: '16px 20px',
-                                borderRadius: '16px',
-                                marginBottom: '24px',
-                                border: '1px solid rgba(203, 213, 225, 0.5)'
+                                background: 'linear-gradient(135deg, #f1f5f9, #e2e8f0)',
+                                padding: '24px',
+                                borderRadius: '32px', // More rounded
+                                marginBottom: '32px',
+                                border: '1px solid rgba(203, 213, 225, 0.5)',
+                                color: '#475569',
+                                fontSize: '15px',
+                                fontWeight: 500,
+                                lineHeight: '1.6'
                             }}>
-                                If your team has an assigned mentor or faculty guide, you can provide their details here.
+                                If your team has an assigned mentor or faculty guide, you can provide their details below.
                             </div>
                             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '24px' }}>
                                 <div style={{ display: 'flex', flexDirection: 'column' }}>
@@ -1108,11 +1117,12 @@ const RegistrationForm: React.FC = () => {
                             </div>
 
                             <div style={{
-                                background: 'linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%)',
-                                padding: '28px',
-                                borderRadius: '28px',
-                                marginBottom: '28px',
-                                border: '1px solid rgba(191, 219, 254, 0.6)'
+                                background: 'linear-gradient(135deg, #ffffff, #f1f5f9)',
+                                padding: isMobile ? '24px' : '40px',
+                                borderRadius: '48px', // Ultra rounded payment box
+                                marginBottom: '32px',
+                                border: '1px solid rgba(226, 232, 240, 0.8)',
+                                boxShadow: '0 15px 40px -10px rgba(0,0,0,0.05)'
                             }}>
                                 <div style={{ display: 'flex', alignItems: 'flex-start', gap: isMobile ? '12px' : '20px' }}>
                                     <div style={{
@@ -1184,15 +1194,15 @@ const RegistrationForm: React.FC = () => {
                                     </div>
 
                                     <div style={{
-                                        padding: isMobile ? '16px' : '24px',
+                                        padding: isMobile ? '24px' : '40px',
                                         background: '#f8fafc',
-                                        borderRadius: isMobile ? '16px' : '20px',
+                                        borderRadius: '48px', // Ultra rounded QR container
                                         border: '1px solid #e2e8f0',
                                         display: 'flex',
                                         flexDirection: 'column',
                                         alignItems: 'center',
-                                        gap: isMobile ? '12px' : '20px',
-                                        boxShadow: 'inset 0 2px 4px rgba(0,0,0,0.02)'
+                                        gap: isMobile ? '20px' : '32px',
+                                        boxShadow: 'inset 0 2px 10px rgba(0,0,0,0.02)'
                                     }}>
                                         <div style={{
                                             padding: '8px',
@@ -1335,10 +1345,11 @@ const RegistrationForm: React.FC = () => {
                                     justifyContent: 'center',
                                     gap: isMobile ? '6px' : '12px',
                                     boxShadow: accepted
-                                        ? '0 12px 40px rgba(0, 78, 224, 0.3)'
+                                        ? '0 20px 50px -10px rgba(0, 78, 224, 0.4)'
                                         : 'none',
-                                    transition: 'all 0.3s ease',
-                                    letterSpacing: '0.02em'
+                                    transition: 'all 0.4s cubic-bezier(0.16, 1, 0.3, 1)',
+                                    letterSpacing: '0.04em',
+                                    textTransform: 'uppercase'
                                 }}
                             >
                                 {isSubmitting ? (

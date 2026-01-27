@@ -61,7 +61,11 @@ const sendTeamEmail = async (candidate, type) => {
         return;
     }
 
-    const recipients = [candidate.leader.email, candidate.member.email];
+    const recipients = [candidate.leader?.email, candidate.member?.email].filter(email => email && email.trim());
+    if (recipients.length === 0) {
+        console.error(`⚠️ No valid recipients found for team ${candidate.teamName}. Skipping email.`);
+        return;
+    }
     const isVerified = type === 'Verified';
 
     console.log(`Attempting to send ${type} email to: ${recipients.join(', ')}`);

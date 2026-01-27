@@ -2,7 +2,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { ArrowRight, Timer, Trophy, CreditCard } from 'lucide-react';
 import { Link } from 'react-router-dom';
-import viksitImage from '../assets/viksit_bharat_hero.png';
+import camceeImage from '../assets/camcee_hero.png';
 
 const Hero: React.FC = () => {
     return (
@@ -69,7 +69,7 @@ const Hero: React.FC = () => {
                         fontWeight: 900,
                         color: '#0f172a'
                     }}>
-                        <span style={{ color: 'var(--primary)' }}>Brilliant Bharath</span> <br />
+                        <span style={{ color: 'var(--primary)' }}>Brilliant Bharat</span> <br />
                         <span style={{ display: 'inline-flex', gap: '8px', fontSize: '0.85em' }}>
                             <span style={{ color: '#FF9933' }}>Viksit</span>
                             <span style={{ color: '#138808' }}>Bharat</span>
@@ -148,8 +148,8 @@ const Hero: React.FC = () => {
                     }}
                 >
                     <img
-                        src={viksitImage}
-                        alt="Viksit Bharat Vision"
+                        src={camceeImage}
+                        alt="CAMCEE 5.0"
                         style={{
                             width: '100%',
                             height: 'auto',

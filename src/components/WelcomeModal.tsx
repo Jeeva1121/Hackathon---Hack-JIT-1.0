@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { X, Code2 } from 'lucide-react';
 import campusImg from '../assets/jit_campus.png';
-import sleepIcon from '../assets/sleep_icon.png';
+import sirenIcon from '../assets/siren_icon.png';
+import SplitText from './SplitText';
+import BlurText from './BlurText';
 
 const WelcomeModal: React.FC = () => {
     const [isOpen, setIsOpen] = useState(false);
@@ -12,7 +13,6 @@ const WelcomeModal: React.FC = () => {
         const handleResize = () => setIsMobile(window.innerWidth < 768);
         window.addEventListener('resize', handleResize);
 
-        // Show modal on page reload (component mount)
         const timer = setTimeout(() => {
             setIsOpen(true);
         }, 800);
@@ -38,55 +38,49 @@ const WelcomeModal: React.FC = () => {
                     alignItems: 'center',
                     justifyContent: 'center',
                     padding: '20px',
-                    background: 'rgba(15, 23, 42, 0.6)',
-                    backdropFilter: 'blur(8px)'
+                    background: 'rgba(15, 23, 42, 0.15)', // Neutral light backdrop with a hint of depth
+                    backdropFilter: 'blur(12px)'
                 }}>
                     <motion.div
-                        initial={{ opacity: 0, scale: 0.9, y: 20 }}
-                        animate={{ opacity: 1, scale: 1, y: 0 }}
-                        exit={{ opacity: 0, scale: 0.9, y: 20 }}
-                        transition={{ duration: 0.4, ease: "easeOut" }}
+                        initial={{ opacity: 0, scale: 0.9, y: 50 }}
+                        animate={{ opacity: 1, scale: 1, y: 30 }}
+                        exit={{
+                            opacity: 0,
+                            scale: 0.95,
+                            y: 20,
+                            transition: { duration: 0.4, ease: 'easeOut' }
+                        }}
+                        transition={{
+                            duration: 0.5,
+                            ease: [0.16, 1, 0.3, 1]
+                        }}
                         style={{
-                            background: 'white',
+                            background: 'rgba(255, 255, 255, 0.98)', // Glassy white with high opacity
                             width: '100%',
-                            maxWidth: isMobile ? '400px' : '540px',
-                            borderRadius: isMobile ? '32px' : '48px',
+                            maxWidth: isMobile ? '340px' : '440px',
+                            borderRadius: isMobile ? '28px' : '40px',
                             overflow: 'hidden',
                             position: 'relative',
-                            boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.3)',
+                            boxShadow: '0 40px 100px -20px rgba(0, 0, 0, 0.12), 0 0 0 1px rgba(255, 255, 255, 0.8) inset',
                             display: 'flex',
-                            flexDirection: 'column'
+                            flexDirection: 'column',
+                            border: '1px solid rgba(255, 255, 255, 0.6)',
+                            backdropFilter: 'blur(30px)'
                         }}
                     >
-                        {/* Close Button */}
-                        <button
-                            onClick={closeModal}
-                            style={{
-                                position: 'absolute',
-                                top: '20px',
-                                right: '20px',
-                                width: '40px',
-                                height: '40px',
-                                borderRadius: '50%',
-                                background: 'white',
-                                border: 'none',
-                                display: 'flex',
-                                alignItems: 'center',
-                                justifyContent: 'center',
-                                cursor: 'pointer',
-                                zIndex: 10,
-                                boxShadow: '0 4px 12px rgba(0,0,0,0.1)',
-                                color: '#64748b',
-                                transition: 'all 0.2s ease'
-                            }}
-                            onMouseOver={(e) => e.currentTarget.style.transform = 'scale(1.1)'}
-                            onMouseOut={(e) => e.currentTarget.style.transform = 'scale(1)'}
-                        >
-                            <X size={20} />
-                        </button>
+                        {/* Elegant Background Pattern */}
+                        <div style={{
+                            position: 'absolute',
+                            top: '-50px',
+                            right: '-50px',
+                            width: '200px',
+                            height: '200px',
+                            background: 'radial-gradient(circle, rgba(0, 78, 224, 0.05) 0%, transparent 70%)',
+                            zIndex: 0
+                        }} />
 
-                        {/* Image Header */}
-                        <div style={{ position: 'relative', height: isMobile ? '180px' : '300px', width: '100%' }}>
+                        {/* Image Header with Elegant Overlay */}
+                        <div style={{ position: 'relative', height: isMobile ? '160px' : '220px', width: '100%' }}>
                             <img
                                 src={campusImg}
                                 alt="JIT Campus"
@@ -98,98 +92,140 @@ const WelcomeModal: React.FC = () => {
                             />
                             <div style={{
                                 position: 'absolute',
-                                bottom: 0,
+                                bottom: '-2px', // Overlap to remove the line
                                 left: 0,
                                 right: 0,
-                                height: '100px',
-                                background: 'linear-gradient(to top, white, transparent)'
+                                height: '120px',
+                                background: 'linear-gradient(to top, rgba(255, 255, 255, 0.98) 15%, rgba(255, 255, 255, 0) 100%)',
+                                zIndex: 1
                             }} />
+
+                            {/* Old UI Style Badge Reverted - Glass Light Style */}
+                            <div style={{
+                                position: 'absolute',
+                                top: '20px',
+                                left: '20px',
+                                background: 'rgba(255, 255, 255, 0.25)',
+                                backdropFilter: 'blur(8px)',
+                                padding: '6px 14px',
+                                borderRadius: '100px',
+                                border: '1px solid rgba(255, 255, 255, 0.4)',
+                                fontSize: '10px',
+                                fontWeight: 700,
+                                color: 'rgba(15, 23, 42, 0.8)',
+                                textTransform: 'uppercase',
+                                letterSpacing: '0.1em',
+                                zIndex: 2
+                            }}>
+                                JIT Coimbatore
+                            </div>
                         </div>
 
-                        {/* Content */}
-                        <div style={{ padding: isMobile ? '0 28px 32px' : '0 48px 48px', textAlign: 'center' }}>
+                        {/* Content Section */}
+                        <div style={{ padding: isMobile ? '0 24px 36px' : '0 40px 48px', textAlign: 'center', position: 'relative', zIndex: 1 }}>
+                            {/* Refined Announcement Bar - Moved Down Style */}
                             <div style={{
-                                width: '100%',
-                                overflow: 'hidden',
-                                background: 'rgba(0, 78, 224, 0.05)',
-                                borderRadius: '100px',
-                                marginBottom: isMobile ? '20px' : '32px',
-                                position: 'relative',
-                                height: isMobile ? '32px' : '40px',
+                                width: 'fit-content',
+                                margin: '18px auto 18px', // Increased margins to move down and add space with title
                                 display: 'flex',
                                 alignItems: 'center',
-                                border: '1px solid rgba(0, 78, 224, 0.1)'
+                                justifyContent: 'center',
+                                zIndex: 1
                             }}>
-                                <motion.div
-                                    animate={{ x: ["0%", "-50%"] }}
-                                    transition={{
-                                        repeat: Infinity,
-                                        duration: 15,
-                                        ease: "linear"
-                                    }}
-                                    style={{
-                                        whiteSpace: 'nowrap',
-                                        display: 'flex',
-                                        alignItems: 'center',
-                                        color: '#004ee0',
-                                        fontWeight: 800,
-                                        fontSize: isMobile ? '12px' : '15px',
-                                        letterSpacing: '0.02em',
-                                        position: 'absolute',
-                                        left: 0
-                                    }}
-                                >
-                                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px', paddingRight: '40px' }}>
-                                        <Code2 size={isMobile ? 14 : 18} />
-                                        <span>HACKATHON SEASON IS HERE — A 24 HOURS HACKATHON, "CODE TILL YOU DROP"</span>
-                                    </div>
-                                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px', paddingRight: '40px' }}>
-                                        <Code2 size={isMobile ? 14 : 18} />
-                                        <span>HACKATHON SEASON IS HERE — A 24 HOURS HACKATHON, "CODE TILL YOU DROP"</span>
-                                    </div>
-                                </motion.div>
+                                <BlurText
+                                    text="24 Hours Hackathon — Code Till You Drop"
+                                    animateBy="words"
+                                    delay={100}
+                                    direction="top"
+                                    className="announcement-text"
+                                />
+                                <style>{`
+                                    .announcement-text {
+                                        color: #334155;
+                                        font-weight: 700;
+                                        font-size: ${isMobile ? '11px' : '12px'};
+                                        letter-spacing: 0.05em;
+                                        text-transform: uppercase;
+                                        white-space: nowrap;
+                                        display: flex;
+                                        align-items: center;
+                                        gap: 4px;
+                                    }
+                                `}</style>
                             </div>
 
-                            <h2 style={{
-                                fontSize: isMobile ? '32px' : '48px',
-                                fontWeight: 900,
-                                color: '#0f172a',
-                                marginBottom: '12px',
-                                lineHeight: 1
-                            }}>
-                                <span style={{ color: 'var(--primary)' }}>CAMCEE</span> 5.0
-                            </h2>
+                            {/* Main Title with Professional Colors */}
+                            <div style={{ marginBottom: '16px', marginTop: '4px' }}>
+                                <SplitText
+                                    text="CAMCEE 5.0"
+                                    className="modal-title"
+                                    delay={40}
+                                    duration={0.8}
+                                    splitType="words"
+                                    textAlign="center"
+                                    tag="h2"
+                                />
+                                <style>{`
+                                    .modal-title {
+                                        font-size: ${isMobile ? '36px' : '44px'} !important;
+                                        font-weight: 800 !important;
+                                        color: #0f172a !important;
+                                        line-height: 1 !important;
+                                        letter-spacing: -0.04em !important;
+                                        display: block !important;
+                                    }
+                                    .modal-title .split-word:nth-child(1) { color: #f97316; }
+                                    .modal-title .split-word:nth-child(2) { color: #2563eb; }
+                                `}</style>
+                            </div>
 
+                            {/* Department Welcome Text */}
                             <div style={{
-                                display: 'inline-flex',
-                                alignItems: 'center',
-                                gap: isMobile ? '10px' : '12px',
-                                background: 'rgba(255, 255, 255, 0.95)',
-                                padding: isMobile ? '10px 20px' : '16px 32px',
-                                borderRadius: '100px',
-                                marginBottom: isMobile ? '28px' : '40px',
-                                boxShadow: '0 10px 30px rgba(0, 78, 224, 0.08)',
-                                border: '1px solid rgba(0, 78, 224, 0.1)',
-                                fontWeight: 800,
-                                fontSize: isMobile ? '14px' : '16px'
+                                marginBottom: '12px',
+                                marginTop: '8px',
+                                fontWeight: 700, // Increased weight for better visibility
+                                fontSize: isMobile ? '15px' : '17px',
+                                color: '#1e293b',
+                                fontFamily: "'Archia', sans-serif",
+                                letterSpacing: '0.01em',
+                                opacity: 0.9
                             }}>
-                                <img src={sleepIcon} alt="Sleep Icon" style={{ width: isMobile ? '18px' : '24px', height: isMobile ? '18px' : '24px' }} />
-                                <span>
-                                    "404": <span style={{ color: '#004ee0' }}>Sleep Not Found</span>
-                                </span>
+                                Welcome to CSE Department
+                            </div>
+
+                            {/* Registration Deadline Notice */}
+                            <div style={{
+                                marginBottom: isMobile ? '28px' : '34px', // Slightly reduced to move button up
+                                fontSize: isMobile ? '12px' : '13px',
+                                fontWeight: 600,
+                                color: '#ef4444',
+                                display: 'flex',
+                                alignItems: 'center',
+                                justifyContent: 'center',
+                                gap: '8px'
+                            }}>
+                                <img src={sirenIcon} alt="Siren" style={{ width: '20px', height: '20px', animation: 'pulse 2s infinite', objectFit: 'contain' }} />
+                                Registration closes on Feb 4
+                                <style>{`
+                                    @keyframes pulse {
+                                        0% { opacity: 1; transform: scale(1); }
+                                        50% { opacity: 0.5; transform: scale(1.2); }
+                                        100% { opacity: 1; transform: scale(1); }
+                                    }
+                                `}</style>
                             </div>
 
                             <button
                                 onClick={closeModal}
                                 style={{
                                     width: '100%',
-                                    maxWidth: isMobile ? '240px' : '320px',
+                                    maxWidth: isMobile ? '200px' : '240px',
                                     margin: '0 auto',
                                     display: 'flex',
                                     alignItems: 'center',
                                     justifyContent: 'center',
-                                    padding: isMobile ? '18px 24px' : '24px 36px',
-                                    fontSize: isMobile ? '15px' : '17px',
+                                    padding: isMobile ? '14px 28px' : '16px 40px',
+                                    fontSize: isMobile ? '13px' : '15px',
                                     fontWeight: 700,
                                     borderRadius: '100px',
                                     background: '#22c55e',
@@ -197,18 +233,20 @@ const WelcomeModal: React.FC = () => {
                                     border: 'none',
                                     cursor: 'pointer',
                                     transition: 'all 0.3s ease',
-                                    boxShadow: '0 10px 20px rgba(34, 197, 94, 0.15)'
+                                    boxShadow: '0 15px 30px -10px rgba(34, 197, 94, 0.4)',
+                                    textTransform: 'uppercase',
+                                    letterSpacing: '0.05em'
                                 }}
                                 onMouseOver={(e) => {
                                     e.currentTarget.style.transform = 'translateY(-2px)';
-                                    e.currentTarget.style.boxShadow = '0 12px 25px rgba(34, 197, 94, 0.2)';
+                                    e.currentTarget.style.boxShadow = '0 20px 35px -10px rgba(34, 197, 94, 0.5)';
                                 }}
                                 onMouseOut={(e) => {
                                     e.currentTarget.style.transform = 'translateY(0)';
-                                    e.currentTarget.style.boxShadow = '0 10px 20px rgba(34, 197, 94, 0.15)';
+                                    e.currentTarget.style.boxShadow = '0 15px 30px -10px rgba(34, 197, 94, 0.4)';
                                 }}
                             >
-                                Let's Build Something
+                                Get Started
                             </button>
                         </div>
                     </motion.div>
