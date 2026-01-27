@@ -1,16 +1,24 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { ArrowRight, Timer, Trophy, CreditCard } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import camceeImage from '../assets/camcee_hero.png';
 
 const Hero: React.FC = () => {
+    const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
+
+    useEffect(() => {
+        const handleResize = () => setIsMobile(window.innerWidth < 768);
+        window.addEventListener('resize', handleResize);
+        return () => window.removeEventListener('resize', handleResize);
+    }, []);
+
     return (
         <section style={{
             minHeight: '100vh',
             display: 'flex',
             alignItems: 'center',
-            padding: 'clamp(120px, 15vh, 180px) 5% 100px', // Increased top padding for vertical clearance
+            padding: isMobile ? '100px 5% 60px' : 'clamp(120px, 15vh, 180px) 5% 100px',
             background: 'transparent',
             position: 'relative',
             overflow: 'visible' // Changed from hidden to visible to prevent clipping floating elements
@@ -49,23 +57,23 @@ const Hero: React.FC = () => {
                         display: 'inline-flex',
                         alignItems: 'center',
                         gap: '8px',
-                        padding: '10px 20px',
+                        padding: isMobile ? '6px 14px' : '10px 20px',
                         background: 'var(--primary-light)',
                         borderRadius: '100px',
-                        marginBottom: '32px',
-                        fontSize: 'max(13px, 0.85vw)',
+                        marginBottom: isMobile ? '20px' : '32px',
+                        fontSize: isMobile ? '11px' : 'max(13px, 0.85vw)',
                         fontWeight: 700,
                         color: 'var(--primary)',
                         letterSpacing: '0.02em'
                     }}>
-                        <Timer size={16} />
+                        <Timer size={isMobile ? 14 : 16} />
                         <span>24 HOURS OF INTENSE INNOVATION</span>
                     </div>
 
                     <h1 style={{
-                        fontSize: 'clamp(44px, 5.5vw, 76px)',
+                        fontSize: isMobile ? '38px' : 'clamp(44px, 5.5vw, 76px)',
                         lineHeight: 1.1,
-                        marginBottom: '28px',
+                        marginBottom: isMobile ? '20px' : '28px',
                         fontWeight: 900,
                         color: '#0f172a'
                     }}>
@@ -77,9 +85,9 @@ const Hero: React.FC = () => {
                     </h1>
 
                     <p style={{
-                        fontSize: 'clamp(17px, 1.6vw, 21px)',
+                        fontSize: isMobile ? '15px' : 'clamp(17px, 1.6vw, 21px)',
                         color: '#475569',
-                        marginBottom: '48px',
+                        marginBottom: isMobile ? '32px' : '48px',
                         maxWidth: '640px',
                         fontWeight: 500,
                         lineHeight: 1.6
@@ -88,11 +96,11 @@ const Hero: React.FC = () => {
                     </p>
 
 
-                    <div style={{ display: 'flex', gap: '20px', flexWrap: 'wrap', marginBottom: '56px' }}>
-                        <Link to="/register" className="btn-primary" style={{ padding: '14px 30px', fontSize: '16px' }}>
-                            Register Team <ArrowRight size={18} />
+                    <div style={{ display: 'flex', gap: isMobile ? '12px' : '20px', flexWrap: 'wrap', marginBottom: isMobile ? '40px' : '56px' }}>
+                        <Link to="/register" className="btn-primary" style={{ padding: isMobile ? '10px 24px' : '14px 30px', fontSize: isMobile ? '14px' : '16px' }}>
+                            Register Team <ArrowRight size={isMobile ? 16 : 18} />
                         </Link>
-                        <a href="#about" className="btn-outline" style={{ padding: '14px 30px', fontSize: '16px' }}>
+                        <a href="#about" className="btn-outline" style={{ padding: isMobile ? '10px 24px' : '14px 30px', fontSize: isMobile ? '14px' : '16px' }}>
                             Viksit Bharat Goals
                         </a>
                     </div>

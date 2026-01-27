@@ -27,7 +27,7 @@ const Navbar: React.FC = () => {
       left: 0,
       right: 0,
       zIndex: 1000,
-      padding: isMobile ? '12px 5%' : '12px 5%',
+      padding: isMobile ? '8px 5%' : '12px 5%',
       display: 'flex',
       justifyContent: 'space-between',
       alignItems: 'center',
@@ -42,7 +42,7 @@ const Navbar: React.FC = () => {
             src={jitLogo}
             alt="JIT Logo"
             style={{
-              height: isMobile ? '40px' : '56px',
+              height: isMobile ? '32px' : '56px',
               width: 'auto',
               filter: 'drop-shadow(0 4px 6px rgba(0, 0, 0, 0.05))'
             }}
@@ -51,9 +51,9 @@ const Navbar: React.FC = () => {
             <span style={{
               color: '#002e73',
               fontWeight: 800,
-              fontSize: isMobile ? '14px' : '18px',
+              fontSize: isMobile ? '12px' : '18px',
               letterSpacing: '-0.01em',
-              lineHeight: 1.2
+              lineHeight: 1.1
             }}>
               JANSONS INSTITUTE OF TECHNOLOGY
             </span>

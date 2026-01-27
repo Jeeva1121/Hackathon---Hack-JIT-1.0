@@ -613,7 +613,7 @@ const RegistrationForm: React.FC = () => {
                                 display: 'inline-flex',
                                 alignItems: 'center',
                                 gap: '8px',
-                                padding: isMobile ? '8px 14px' : '10px 24px',
+                                padding: isMobile ? '10px' : '10px 24px',
                                 background: 'rgba(255, 255, 255, 1)',
                                 backdropFilter: 'blur(10px)',
                                 borderRadius: '100px',
@@ -627,8 +627,7 @@ const RegistrationForm: React.FC = () => {
                                 overflow: 'hidden',
                                 position: 'relative'
                             }}>
-                                <ArrowLeft size={isMobile ? 14 : 16} />
-                                Back to Home
+                                <ArrowLeft size={isMobile ? 18 : 16} />
                             </Link>
                         </motion.div>
                     )}
