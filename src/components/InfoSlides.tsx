@@ -52,10 +52,12 @@ const InfoSlides: React.FC = () => {
             }} />
 
             <div style={{ textAlign: 'center', marginBottom: 'clamp(40px, 6vh, 60px)', position: 'relative', zIndex: 1 }}>
-                <h2 style={{ fontSize: 'clamp(32px, 4vw, 42px)', marginBottom: '16px', fontWeight: 800 }}>The 17 Global Goals</h2>
+                <h2 style={{ fontSize: 'clamp(32px, 4vw, 42px)', marginBottom: '16px', fontWeight: 800 }}>
+                    <span style={{ color: '#FF9933' }}>Viksit</span> <span style={{ color: '#138808' }}>Bharat</span> 2047
+                </h2>
                 <p style={{ color: '#64748b', maxWidth: '700px', margin: '0 auto', fontSize: 'clamp(15px, 1.8vw, 18px)', fontWeight: 500 }}>
-                    Your project must align with one or more of the UN Sustainable Development Goals.
-                    Innovation starts with solving these global challenges.
+                    Your project should align with the vision of a developed India.
+                    Innovation starts with solving challenges that contribute to our national goals.
                 </p>
             </div>
 

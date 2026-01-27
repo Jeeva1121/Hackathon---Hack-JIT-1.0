@@ -2,7 +2,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { ArrowRight, Timer, Trophy, CreditCard } from 'lucide-react';
 import { Link } from 'react-router-dom';
-import sdgImage from '../assets/dept_earth_full.png';
+import viksitImage from '../assets/viksit_bharat_hero.png';
 
 const Hero: React.FC = () => {
     return (
@@ -70,7 +70,10 @@ const Hero: React.FC = () => {
                         color: '#0f172a'
                     }}>
                         <span style={{ color: 'var(--primary)' }}>Hack@JIT 1.0</span> <br />
-                        <span style={{ color: '#22c55e', fontSize: '0.85em' }}>Global Goals</span>
+                        <span style={{ display: 'inline-flex', gap: '8px', fontSize: '0.85em' }}>
+                            <span style={{ color: '#FF9933' }}>Viksit</span>
+                            <span style={{ color: '#138808' }}>Bharat</span>
+                        </span>
                     </h1>
 
                     <p style={{
@@ -81,7 +84,7 @@ const Hero: React.FC = () => {
                         fontWeight: 500,
                         lineHeight: 1.6
                     }}>
-                        Join forces with brilliant minds to solve the 17 UN Sustainable Development Goals. A 24-hour journey from idea to impact.
+                        Join forces with brilliant minds to contribute towards a Viksit Bharat. A 24-hour journey from idea to impact.
                     </p>
 
 
@@ -90,7 +93,7 @@ const Hero: React.FC = () => {
                             Register Team <ArrowRight size={18} />
                         </Link>
                         <a href="#about" className="btn-outline" style={{ padding: '14px 30px', fontSize: '16px' }}>
-                            View 17 SDGs
+                            Viksit Bharat Goals
                         </a>
                     </div>
 
@@ -145,8 +148,8 @@ const Hero: React.FC = () => {
                     }}
                 >
                     <img
-                        src={sdgImage}
-                        alt="SDG Earth in Hands"
+                        src={viksitImage}
+                        alt="Viksit Bharat Vision"
                         style={{
                             width: '100%',
                             height: 'auto',

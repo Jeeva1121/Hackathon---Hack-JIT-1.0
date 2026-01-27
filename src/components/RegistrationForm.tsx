@@ -64,7 +64,7 @@ const RegistrationForm: React.FC = () => {
         "The hackathon will run for 24 hours (Feb 6, 11 AM - Feb 7, 11 AM).",
         "Submissions after 11:00 AM will not be accepted.",
         "All teams must be registered before the start time.",
-        "Problem statement must be chosen from provided SDGs.",
+        "Problem statement must be chosen from provided themes.",
         "The solution must align with hackathon objectives.",
         "Coding and development must begin only after 11:00 AM.",
         "Any form of reused projects will lead to disqualification.",

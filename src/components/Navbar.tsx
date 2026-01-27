@@ -15,7 +15,7 @@ const Navbar: React.FC = () => {
   }, []);
 
   const navLinks = [
-    { name: "SDG Goals", href: "#about" },
+    { name: "Viksit Bharat", href: "#about" },
     { name: "Schedule", href: "#schedule" },
     { name: "Prizes", href: "#prizes" },
   ];
