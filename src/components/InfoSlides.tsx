@@ -52,7 +52,11 @@ const InfoSlides: React.FC = () => {
             }} />
 
             <div style={{ textAlign: 'center', marginBottom: 'clamp(40px, 6vh, 60px)', position: 'relative', zIndex: 1 }}>
-                <h2 style={{ fontSize: 'clamp(32px, 4vw, 42px)', marginBottom: '16px', fontWeight: 800 }}>
+                <h2 style={{
+                    fontSize: isMobile ? '24px' : 'clamp(32px, 4vw, 42px)',
+                    marginBottom: '16px',
+                    fontWeight: 800
+                }}>
                     <span style={{ color: '#FF9933' }}>Viksit</span> <span style={{ color: '#138808' }}>Bharat</span> 2047
                 </h2>
                 <p style={{ color: '#64748b', maxWidth: '700px', margin: '0 auto', fontSize: 'clamp(15px, 1.8vw, 18px)', fontWeight: 500 }}>
