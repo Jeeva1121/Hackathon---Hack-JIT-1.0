@@ -55,9 +55,10 @@ const InfoSlides: React.FC = () => {
                 <h2 style={{
                     fontSize: isMobile ? '24px' : 'clamp(32px, 4vw, 42px)',
                     marginBottom: '16px',
-                    fontWeight: 800
+                    fontWeight: 800,
+                    color: 'var(--primary)'
                 }}>
-                    <span style={{ color: '#FF9933' }}>Viksit</span> <span style={{ color: '#138808' }}>Bharat</span> 2047
+                    Sustainable Development Goals
                 </h2>
                 <p style={{ color: '#64748b', maxWidth: '700px', margin: '0 auto', fontSize: 'clamp(15px, 1.8vw, 18px)', fontWeight: 500 }}>
                     Your project should align with the vision of a developed India.
