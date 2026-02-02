@@ -636,7 +636,7 @@ const RegistrationForm: React.FC = () => {
                         </div>
                         <h2 style={{ fontSize: isMobile ? '28px' : '36px', fontWeight: 900, color: '#0f172a' }}>Registration Closed</h2>
                         <p style={{ fontSize: '18px', color: '#64748b', lineHeight: 1.6 }}>
-                            Thank you for your overwhelming response! All 43 slots have been booked.
+                            Thank you for your overwhelming response! All 45 slots have been booked.
                             We are no longer accepting new registrations for this event.
                         </p>
                         <Link to="/" style={{

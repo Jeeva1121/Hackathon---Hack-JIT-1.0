@@ -162,8 +162,8 @@ app.get('/api/registration-status', async (req, res) => {
         const count = snapshot.size;
         res.json({
             count,
-            isFull: count >= 43,
-            maxSlots: 43
+            isFull: count >= 45,
+            maxSlots: 45
         });
     } catch (error) {
         res.status(500).json({ error: 'Failed to fetch status' });
@@ -180,7 +180,7 @@ app.post('/api/register', async (req, res) => {
         const count = snapshot.size;
 
         console.log('Current count:', count);
-        if (count >= 43) return res.status(400).json({ error: 'Slots Full' });
+        if (count >= 45) return res.status(400).json({ error: 'Slots Full' });
 
         // Check for duplicate team name
         const q = query(candidatesRef, where("teamName", "==", req.body.teamName));
