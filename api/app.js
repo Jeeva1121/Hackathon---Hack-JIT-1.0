@@ -165,7 +165,7 @@ app.post('/api/register', async (req, res) => {
         const count = snapshot.size;
 
         console.log('Current count:', count);
-        if (count >= 50) return res.status(400).json({ error: 'Slots Full' });
+        if (count >= 43) return res.status(400).json({ error: 'Slots Full' });
 
         // Check for duplicate team name
         const q = query(candidatesRef, where("teamName", "==", req.body.teamName));

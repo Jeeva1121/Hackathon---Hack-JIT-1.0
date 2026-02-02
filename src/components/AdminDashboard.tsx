@@ -173,7 +173,7 @@ const AdminDashboard: React.FC = () => {
                 <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : 'repeat(auto-fit, minmax(280px, 1fr))', gap: isMobile ? '16px' : '24px', marginBottom: '40px' }}>
                     <StatCard icon={<Users size={isMobile ? 20 : 24} />} label="Total Teams" value={stats?.total || 0} color="#3b82f6" isMobile={isMobile} />
                     <StatCard icon={<ShieldCheck size={isMobile ? 20 : 24} />} label="Verified" value={stats?.verified || 0} color="#10b981" isMobile={isMobile} />
-                    <StatCard icon={<Trophy size={isMobile ? 20 : 24} />} label="Slots Left" value={50 - (stats?.total || 0)} color="#f59e0b" isMobile={isMobile} />
+                    <StatCard icon={<Trophy size={isMobile ? 20 : 24} />} label="Slots Left" value={43 - (stats?.total || 0)} color="#f59e0b" isMobile={isMobile} />
                 </div>
 
                 <div style={{ background: 'white', borderRadius: isMobile ? '36px' : '48px', border: '1px solid #e2e8f0', padding: isMobile ? '20px' : '40px', boxShadow: '0 4px 20px rgba(0,0,0,0.02)' }}>
