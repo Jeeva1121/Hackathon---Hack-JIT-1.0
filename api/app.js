@@ -163,7 +163,7 @@ app.get('/api/registration-status', async (req, res) => {
         res.json({
             count,
             isFull: count >= 45,
-            maxSlots: 45
+            maxSlots: 50
         });
     } catch (error) {
         res.status(500).json({ error: 'Failed to fetch status' });
