@@ -3,6 +3,8 @@ import { motion } from 'framer-motion';
 import { ArrowRight, Timer, Trophy, CreditCard } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import camceeImage from '../assets/camcee_hero.png';
+import logoCsir from '../assets/logo_csir.jpg';
+import logoArivial from '../assets/logo_arivial.jpg';
 
 const Hero: React.FC = () => {
     const navigate = useNavigate();
@@ -70,6 +72,23 @@ const Hero: React.FC = () => {
                     transition={{ duration: 0.8 }}
                     style={{ flex: '1 1 600px', minWidth: '320px' }}
                 >
+                    <div style={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: isMobile ? '16px' : '24px',
+                        marginBottom: isMobile ? '24px' : '32px',
+                        flexWrap: 'wrap'
+                    }}>
+                        <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
+                            <span style={{ fontSize: '10px', fontWeight: 800, color: '#94a3b8', textTransform: 'uppercase', letterSpacing: '0.1em' }}>In Association with</span>
+                            <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
+                                <img src={logoCsir} alt="CSIR" style={{ height: isMobile ? '32px' : '48px', width: 'auto', filter: 'drop-shadow(0 4px 6px rgba(0,0,0,0.05))', borderRadius: '4px' }} />
+                                <div style={{ width: '1px', height: '24px', background: '#e2e8f0' }} />
+                                <img src={logoArivial} alt="Arivial Sangam" style={{ height: isMobile ? '32px' : '48px', width: 'auto', filter: 'drop-shadow(0 4px 6px rgba(0,0,0,0.05))', borderRadius: '4px' }} />
+                            </div>
+                        </div>
+                    </div>
+
                     <div style={{
                         display: 'inline-flex',
                         alignItems: 'center',
