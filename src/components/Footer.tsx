@@ -2,6 +2,8 @@ import React from 'react';
 import { Twitter, Instagram, Linkedin, ExternalLink } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import jitLogo from '../assets/jit_logo_no_bg.png';
+import logoCsir from '../assets/logo_csir.jpg';
+import logoArivial from '../assets/logo_arivial.jpg';
 
 const Footer: React.FC = () => {
     return (
@@ -23,7 +25,7 @@ const Footer: React.FC = () => {
                     justifyContent: 'space-between',
                     alignItems: 'center',
                     flexWrap: 'wrap',
-                    gap: '20px'
+                    gap: '40px'
                 }}>
                     <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', flex: '1 1 300px' }}>
                         <div style={{ display: 'flex', alignItems: 'center', gap: '14px' }}>
@@ -47,26 +49,36 @@ const Footer: React.FC = () => {
                         </p>
                     </div>
 
-                    <div style={{ display: 'flex', gap: '20px', alignItems: 'center' }}>
-                        <a href="https://jit.ac.in" target="_blank" rel="noopener noreferrer" style={{
-                            display: 'flex',
-                            alignItems: 'center',
-                            gap: '6px',
-                            color: '#004ee0',
-                            textDecoration: 'none',
-                            fontSize: '13px',
-                            fontWeight: 700,
-                            padding: '8px 16px',
-                            background: 'rgba(0, 78, 224, 0.05)',
-                            borderRadius: '100px',
-                            transition: 'all 0.3s ease'
-                        }}>
-                            College Website <ExternalLink size={14} />
-                        </a>
-                        <div style={{ display: 'flex', gap: '12px' }}>
-                            <a href="https://x.com/JIT_Offl" target="_blank" rel="noopener noreferrer" style={{ color: '#64748b', transition: 'color 0.3s ease' }}><Twitter size={18} /></a>
-                            <a href="https://www.instagram.com/jit_offl/?hl=en" target="_blank" rel="noopener noreferrer" style={{ color: '#64748b', transition: 'color 0.3s ease' }}><Instagram size={18} /></a>
-                            <a href="https://www.linkedin.com/school/jansons-institute-of-technology/" target="_blank" rel="noopener noreferrer" style={{ color: '#64748b', transition: 'color 0.3s ease' }}><Linkedin size={18} /></a>
+                    <div style={{ display: 'flex', gap: '40px', alignItems: 'center', flexWrap: 'wrap' }}>
+                        <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                            <span style={{ fontSize: '9px', fontWeight: 800, color: '#94a3b8', textTransform: 'uppercase', letterSpacing: '0.1em' }}>In Association with</span>
+                            <div style={{ display: 'flex', alignItems: 'center', gap: '24px' }}>
+                                <img src={logoCsir} alt="CSIR" style={{ height: '40px', width: 'auto', borderRadius: '4px' }} />
+                                <img src={logoArivial} alt="Arivial Sangam" style={{ height: '40px', width: 'auto', borderRadius: '4px' }} />
+                            </div>
+                        </div>
+
+                        <div style={{ display: 'flex', gap: '20px', alignItems: 'center' }}>
+                            <a href="https://jit.ac.in" target="_blank" rel="noopener noreferrer" style={{
+                                display: 'flex',
+                                alignItems: 'center',
+                                gap: '6px',
+                                color: '#004ee0',
+                                textDecoration: 'none',
+                                fontSize: '13px',
+                                fontWeight: 700,
+                                padding: '8px 16px',
+                                background: 'rgba(0, 78, 224, 0.05)',
+                                borderRadius: '100px',
+                                transition: 'all 0.3s ease'
+                            }}>
+                                College Website <ExternalLink size={14} />
+                            </a>
+                            <div style={{ display: 'flex', gap: '12px' }}>
+                                <a href="https://x.com/JIT_Offl" target="_blank" rel="noopener noreferrer" style={{ color: '#64748b', transition: 'color 0.3s ease' }}><Twitter size={18} /></a>
+                                <a href="https://www.instagram.com/jit_offl/?hl=en" target="_blank" rel="noopener noreferrer" style={{ color: '#64748b', transition: 'color 0.3s ease' }}><Instagram size={18} /></a>
+                                <a href="https://www.linkedin.com/school/jansons-institute-of-technology/" target="_blank" rel="noopener noreferrer" style={{ color: '#64748b', transition: 'color 0.3s ease' }}><Linkedin size={18} /></a>
+                            </div>
                         </div>
                     </div>
                 </div>
