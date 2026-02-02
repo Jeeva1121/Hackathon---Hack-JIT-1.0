@@ -141,6 +141,11 @@ const AdminDashboard: React.FC = () => {
                         <span style={{ marginLeft: isMobile ? '6px' : '16px', fontSize: isMobile ? '10px' : '14px', verticalAlign: 'middle', padding: '3px 8px', background: '#004ee010', border: '1px solid #004ee020', borderRadius: '100px', color: '#004ee0', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.05em' }}>
                             {localStorage.getItem('adminRole') || 'Staff'}
                         </span>
+                        {stats?.total >= 43 && (
+                            <span style={{ marginLeft: '10px', fontSize: isMobile ? '10px' : '14px', verticalAlign: 'middle', padding: '3px 8px', background: '#ef444410', border: '1px solid #ef444420', borderRadius: '100px', color: '#ef4444', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+                                Registration Full
+                            </span>
+                        )}
                     </h1>
                     <div style={{ display: 'flex', alignItems: 'center', gap: isMobile ? '8px' : '16px', width: isMobile ? 'auto' : 'auto' }}>
                         <button onClick={handleDownload} disabled={loading} style={{ background: 'var(--primary)', color: 'white', padding: isMobile ? '8px 14px' : '14px 28px', borderRadius: '100px', border: 'none', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px', fontWeight: 700, fontSize: isMobile ? '11px' : '16px', cursor: 'pointer', boxShadow: '0 8px 16px rgba(0, 78, 224, 0.12)' }}>

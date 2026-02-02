@@ -155,6 +155,21 @@ const sendAdminNotification = async (candidate) => {
     }
 };
 
+app.get('/api/registration-status', async (req, res) => {
+    try {
+        const candidatesRef = collection(db, "candidates");
+        const snapshot = await getDocs(candidatesRef);
+        const count = snapshot.size;
+        res.json({
+            count,
+            isFull: count >= 43,
+            maxSlots: 43
+        });
+    } catch (error) {
+        res.status(500).json({ error: 'Failed to fetch status' });
+    }
+});
+
 
 app.post('/api/register', async (req, res) => {
     console.log('Registration request received:', req.body.teamName);

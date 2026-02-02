@@ -6,10 +6,18 @@ import camceeImage from '../assets/camcee_hero.png';
 
 const Hero: React.FC = () => {
     const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
+    const [isFull, setIsFull] = useState(false);
 
     useEffect(() => {
         const handleResize = () => setIsMobile(window.innerWidth < 768);
         window.addEventListener('resize', handleResize);
+
+        // Check registration status
+        fetch('/api/registration-status')
+            .then(res => res.json())
+            .then(data => setIsFull(data.isFull))
+            .catch(err => console.error('Status fetch error:', err));
+
         return () => window.removeEventListener('resize', handleResize);
     }, []);
 
@@ -95,11 +103,23 @@ const Hero: React.FC = () => {
 
 
                     <div style={{ display: 'flex', gap: isMobile ? '12px' : '20px', flexWrap: 'wrap', marginBottom: isMobile ? '40px' : '56px' }}>
-                        <Link to="/register" className="btn-primary" style={{ padding: isMobile ? '10px 24px' : '14px 30px', fontSize: isMobile ? '14px' : '16px' }}>
-                            Register Team <ArrowRight size={isMobile ? 16 : 18} />
-                        </Link>
+                        {isFull ? (
+                            <div className="btn-primary" style={{
+                                padding: isMobile ? '10px 24px' : '14px 30px',
+                                fontSize: isMobile ? '14px' : '16px',
+                                background: '#94a3b8',
+                                cursor: 'not-allowed',
+                                opacity: 0.8
+                            }}>
+                                Registration Full
+                            </div>
+                        ) : (
+                            <Link to="/register" className="btn-primary" style={{ padding: isMobile ? '10px 24px' : '14px 30px', fontSize: isMobile ? '14px' : '16px' }}>
+                                Register Team <ArrowRight size={isMobile ? 16 : 18} />
+                            </Link>
+                        )}
                         <a href="#about" className="btn-outline" style={{ padding: isMobile ? '10px 24px' : '14px 30px', fontSize: isMobile ? '14px' : '16px' }}>
-                            Viksit Bharat Goals
+                            Sustainable Goals
                         </a>
                     </div>
 

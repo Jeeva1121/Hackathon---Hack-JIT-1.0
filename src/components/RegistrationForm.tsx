@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ShieldCheck, X, FileText, CheckCircle, ArrowLeft, Smartphone } from 'lucide-react';
+import { ShieldCheck, X, FileText, CheckCircle, ArrowLeft, Smartphone, Lock } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 import regUsers from '../assets/reg_users.png';
@@ -22,9 +22,17 @@ const RegistrationForm: React.FC = () => {
     const [accepted, setAccepted] = useState(false);
     const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
     const [showBackButton, setShowBackButton] = useState(true);
+    const [isFull, setIsFull] = useState(false);
 
     useEffect(() => {
         const handleResize = () => setIsMobile(window.innerWidth < 768);
+
+        // Check registration status
+        fetch('/api/registration-status')
+            .then(res => res.json())
+            .then(data => setIsFull(data.isFull))
+            .catch(err => console.error('Status fetch error:', err));
+
         const handleScroll = () => {
             if (window.scrollY > 20) {
                 setShowBackButton(false);
@@ -586,804 +594,857 @@ const RegistrationForm: React.FC = () => {
             {/* Registration Page */}
             <section style={{
                 minHeight: '100vh',
-                padding: '160px 5% 80px',
+                padding: isMobile ? '100px 5% 60px' : '160px 5% 80px',
                 backgroundImage: `url(${websiteBg})`,
                 backgroundSize: 'cover',
                 backgroundPosition: 'center',
                 backgroundAttachment: 'fixed',
                 position: 'relative',
-                overflow: 'hidden'
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                justifyContent: isFull ? 'center' : 'flex-start'
             }}>
-
-                {/* Back Button */}
-                <AnimatePresence>
-                    {showBackButton && (
-                        <motion.div
-                            initial={{ opacity: 0, x: -20, y: -10 }}
-                            animate={{ opacity: 1, x: 0, y: 0 }}
-                            exit={{ opacity: 0, y: -20, transition: { duration: 0.2 } }}
-                            style={{
-                                position: 'fixed',
-                                top: isMobile ? '96px' : '100px',
-                                left: '5%',
-                                zIndex: 1100
-                            }}
-                        >
-                            <Link to="/" style={{
-                                display: 'inline-flex',
-                                alignItems: 'center',
-                                gap: '8px',
-                                padding: isMobile ? '10px' : '10px 24px',
-                                background: 'rgba(255, 255, 255, 1)',
-                                backdropFilter: 'blur(10px)',
-                                borderRadius: '100px',
-                                border: '1px solid rgba(226, 232, 240, 1)',
-                                color: '#475569',
-                                textDecoration: 'none',
-                                fontWeight: 700,
-                                fontSize: isMobile ? '11px' : '13px',
-                                transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
-                                boxShadow: '0 8px 24px rgba(0, 0, 0, 0.05)',
-                                overflow: 'hidden',
-                                position: 'relative'
-                            }}>
-                                <ArrowLeft size={isMobile ? 18 : 16} />
-                            </Link>
-                        </motion.div>
-                    )}
-                </AnimatePresence>
-
-                <div style={{ maxWidth: '900px', margin: '0 auto', position: 'relative', zIndex: 1 }}>
-
-                    {/* Header */}
+                {isFull ? (
                     <motion.div
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.6 }}
-                        style={{ textAlign: 'center', marginBottom: '60px' }}
+                        initial={{ opacity: 0, scale: 0.9 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        style={{
+                            ...cardStyle,
+                            maxWidth: '600px',
+                            textAlign: 'center',
+                            display: 'flex',
+                            flexDirection: 'column',
+                            alignItems: 'center',
+                            gap: '24px',
+                            background: 'rgba(255, 255, 255, 0.9)',
+                            border: '1px solid #ef4444'
+                        }}
                     >
                         <div style={{
-                            display: 'inline-flex',
+                            width: '80px',
+                            height: '80px',
+                            background: '#fef2f2',
+                            borderRadius: '50%',
+                            display: 'flex',
                             alignItems: 'center',
-                            gap: '12px',
-                            background: 'white',
-                            border: '1px solid rgba(239, 68, 68, 0.2)',
-                            padding: isMobile ? '8px 16px' : '12px 24px',
-                            borderRadius: '100px', // Pill shape for deadline
-                            marginBottom: isMobile ? '24px' : '40px',
-                            boxShadow: '0 10px 30px -5px rgba(239, 68, 68, 0.1), 0 0 0 1px rgba(239, 68, 68, 0.1) inset'
+                            justifyContent: 'center',
+                            color: '#ef4444',
+                            marginBottom: '10px'
                         }}>
-                            <img src={sirenIcon} alt="Siren" style={{ width: isMobile ? '18px' : '24px', height: isMobile ? '18px' : '24px', animation: 'pulse 2s infinite', objectFit: 'contain' }} />
-                            <div style={{ textAlign: 'left' }}>
-                                <div style={{ color: '#0f172a', fontWeight: 800, fontSize: isMobile ? '10px' : '13px', textTransform: 'uppercase', letterSpacing: '0.04em' }}>Registration Closes: <span style={{ color: '#ef4444' }}>Feb 4</span></div>
-                            </div>
+                            <Lock size={40} />
                         </div>
-
-                        <h1 style={{
-                            fontSize: 'clamp(32px, 5vw, 48px)', // Slightly reduced from 36px, 6vw, 56px
-                            fontWeight: 900,
-                            marginBottom: '20px',
-                            background: 'linear-gradient(135deg, #0f172a, #334155)',
-                            WebkitBackgroundClip: 'text',
-                            WebkitTextFillColor: 'transparent',
-                            letterSpacing: '-0.03em'
-                        }}>
-                            Team Registration
-                        </h1>
-                        <p style={{
-                            color: '#64748b',
-                            fontSize: isMobile ? '14px' : '18px',
-                            maxWidth: '700px',
-                            margin: '0 auto',
-                            lineHeight: 1.7
-                        }}>
-                            An ISO certified institution dedicated to excellence in engineering education,
-                            fostering innovation and professional integrity to shape a sustainable future.
+                        <h2 style={{ fontSize: isMobile ? '28px' : '36px', fontWeight: 900, color: '#0f172a' }}>Registration Closed</h2>
+                        <p style={{ fontSize: '18px', color: '#64748b', lineHeight: 1.6 }}>
+                            Thank you for your overwhelming response! All 43 slots have been booked.
+                            We are no longer accepting new registrations for this event.
                         </p>
+                        <Link to="/" style={{
+                            padding: '12px 24px',
+                            background: 'var(--primary)',
+                            color: 'white',
+                            borderRadius: '100px',
+                            textDecoration: 'none',
+                            fontWeight: 700,
+                            marginTop: '10px'
+                        }}>
+                            Go Back Home
+                        </Link>
                     </motion.div>
-
-                    <form onSubmit={handleSubmit}>
-                        {/* Team Identity */}
-                        <motion.div
-                            initial={{ opacity: 0, y: 30 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            transition={{ delay: 0.1 }}
-                            style={cardStyle}
-                        >
-                            {renderSectionHeader("Team Identity", regTrophy, true)}
-                            {renderInput("Team Name", "teamName", null, "text", "Enter a unique name for your team")}
-                        </motion.div>
-
-                        {/* Team Leader */}
-                        <motion.div
-                            initial={{ opacity: 0, y: 30 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            transition={{ delay: 0.2 }}
-                            style={cardStyle}
-                        >
-                            {renderSectionHeader("Team Member 1 Details", regLeader, true)}
-                            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '24px' }}>
-                                {renderInput("Full Name", "name", "leader", "text", "Team Member 1's full name")}
-                                {renderInput("Mobile Number", "phone", "leader", "tel", "10-digit mobile number")}
-                                {renderInput("Email ID", "email", "leader", "email", "personal@email.com")}
-                                {renderInput("Department", "dept", "leader", "text", "e.g. Computer Science")}
-                            </div>
-                            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '24px', marginTop: '24px' }}>
-                                {renderInput("College Name", "college", "leader", "text", "Full institution name")}
-                                <div style={{ display: 'flex', flexDirection: 'column' }}>
-                                    <label style={{
-                                        fontSize: '14px',
-                                        fontWeight: 700,
+                ) : (
+                    <>
+                        <div style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, background: 'rgba(255,255,255,0.4)', pointerEvents: 'none' }} />
+                        {/* Back Button */}
+                        <AnimatePresence>
+                            {showBackButton && (
+                                <motion.div
+                                    initial={{ opacity: 0, x: -20, y: -10 }}
+                                    animate={{ opacity: 1, x: 0, y: 0 }}
+                                    exit={{ opacity: 0, y: -20, transition: { duration: 0.2 } }}
+                                    style={{
+                                        position: 'fixed',
+                                        top: isMobile ? '96px' : '100px',
+                                        left: '5%',
+                                        zIndex: 1100
+                                    }}
+                                >
+                                    <Link to="/" style={{
+                                        display: 'inline-flex',
+                                        alignItems: 'center',
+                                        gap: '8px',
+                                        padding: isMobile ? '10px' : '10px 24px',
+                                        background: 'rgba(255, 255, 255, 1)',
+                                        backdropFilter: 'blur(10px)',
+                                        borderRadius: '100px',
+                                        border: '1px solid rgba(226, 232, 240, 1)',
                                         color: '#475569',
-                                        marginBottom: '12px',
-                                        letterSpacing: '0.02em',
-                                        textTransform: 'uppercase'
-                                    }}>Gender <span style={{ color: '#22c55e' }}>*</span></label>
-                                    <select
-                                        required
-                                        value={formData.leader.gender}
-                                        onChange={(e) => setFormData(prev => ({ ...prev, leader: { ...prev.leader, gender: e.target.value } }))}
-                                        style={selectStyle}
-                                    >
-                                        <option value="">Select Gender</option>
-                                        {genderOptions.map(g => <option key={g} value={g}>{g}</option>)}
-                                    </select>
-                                </div>
-                            </div>
-                        </motion.div>
-
-                        {/* Team Member */}
-                        <motion.div
-                            initial={{ opacity: 0, y: 30 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            transition={{ delay: 0.3 }}
-                            style={cardStyle}
-                        >
-                            {renderSectionHeader("Team Member 2 Details", regUsers, true)}
-                            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '24px' }}>
-                                {renderInput("Full Name", "name", "member", "text", "Team Member 2's full name", false)}
-                                {renderInput("Mobile Number", "phone", "member", "tel", "10-digit mobile number", false)}
-                                {renderInput("Email ID", "email", "member", "email", "personal@email.com", false)}
-                                {renderInput("Department", "dept", "member", "text", "e.g. Computer Science", false)}
-                            </div>
-                            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '24px', marginTop: '24px' }}>
-                                {renderInput("College Name", "college", "member", "text", "Full institution name", false)}
-                                <div style={{ display: 'flex', flexDirection: 'column' }}>
-                                    <label style={{
-                                        fontSize: '14px',
+                                        textDecoration: 'none',
                                         fontWeight: 700,
-                                        color: '#475569',
-                                        marginBottom: '12px',
-                                        letterSpacing: '0.02em',
-                                        textTransform: 'uppercase'
-                                    }}>Gender</label>
-                                    <select
-                                        required={false}
-                                        value={formData.member.gender}
-                                        onChange={(e) => setFormData(prev => ({ ...prev, member: { ...prev.member, gender: e.target.value } }))}
-                                        style={selectStyle}
-                                    >
-                                        <option value="">Select Gender</option>
-                                        {genderOptions.map(g => <option key={g} value={g}>{g}</option>)}
-                                    </select>
-                                </div>
-                            </div>
-                        </motion.div>
-
-                        {/* Location & Travel */}
-                        <motion.div
-                            initial={{ opacity: 0, y: 30 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            transition={{ delay: 0.4 }}
-                            style={cardStyle}
-                        >
-                            {renderSectionHeader("Location & Arrival Details", regLocation, true)}
-                            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '24px' }}>
-                                {renderInput("District of College", "collegeDistrict", null, "text", "e.g. Coimbatore")}
-                                {renderInput("College Pincode", "collegePincode", null, "text", "6-digit pincode")}
-                                {renderInput("Arrival Date", "expectedArrivalDate", null, "date")}
-                                <div style={{ display: 'flex', flexDirection: 'column' }}>
-                                    <label style={{
-                                        fontSize: '14px',
-                                        fontWeight: 700,
-                                        color: '#475569',
-                                        marginBottom: '12px',
-                                        letterSpacing: '0.02em',
-                                        textTransform: 'uppercase'
-                                    }}>Arrival Time <span style={{ color: '#22c55e' }}>*</span></label>
-                                    <div style={{ display: 'flex', gap: '8px' }}>
-                                        {/* Hour Select */}
-                                        <select
-                                            value={formData.expectedArrivalTime.split(':')[0] || '12'}
-                                            onChange={(e) => {
-                                                const parts = formData.expectedArrivalTime.split(':');
-                                                const mins = parts[1]?.split(' ')[0] || '00';
-                                                const ampm = parts[1]?.split(' ')[1] || 'AM';
-                                                setFormData(prev => ({ ...prev, expectedArrivalTime: `${e.target.value}:${mins} ${ampm}` }));
-                                            }}
-                                            style={{ ...selectStyle, flex: 1, padding: '10px' }}
-                                        >
-                                            {Array.from({ length: 12 }, (_, i) => (i + 1).toString().padStart(2, '0')).map(h => (
-                                                <option key={h} value={h}>{h}</option>
-                                            ))}
-                                        </select>
-
-                                        {/* Minute Select */}
-                                        <select
-                                            value={formData.expectedArrivalTime.split(':')[1]?.split(' ')[0] || '00'}
-                                            onChange={(e) => {
-                                                const parts = formData.expectedArrivalTime.split(':');
-                                                const hour = parts[0] || '12';
-                                                const ampm = parts[1]?.split(' ')[1] || 'AM';
-                                                setFormData(prev => ({ ...prev, expectedArrivalTime: `${hour}:${e.target.value} ${ampm}` }));
-                                            }}
-                                            style={{ ...selectStyle, flex: 1, padding: '10px' }}
-                                        >
-                                            {Array.from({ length: 12 }, (_, i) => (i * 5).toString().padStart(2, '0')).map(m => (
-                                                <option key={m} value={m}>{m}</option>
-                                            ))}
-                                        </select>
-
-                                        {/* AM/PM Select */}
-                                        <select
-                                            value={formData.expectedArrivalTime.split(' ')[1] || 'AM'}
-                                            onChange={(e) => {
-                                                const parts = formData.expectedArrivalTime.split(' ')[0] || '12:00';
-                                                setFormData(prev => ({ ...prev, expectedArrivalTime: `${parts} ${e.target.value}` }));
-                                            }}
-                                            style={{ ...selectStyle, flex: 1, padding: '10px' }}
-                                        >
-                                            <option value="AM">AM</option>
-                                            <option value="PM">PM</option>
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
-                        </motion.div>
-
-                        {/* Accommodation */}
-                        <motion.div
-                            initial={{ opacity: 0, y: 30 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            transition={{ delay: 0.5 }}
-                            style={cardStyle}
-                        >
-                            {renderSectionHeader("Accommodation", regAccommodation, true)}
-                            <div style={{
-                                background: 'linear-gradient(135deg, #fffbeb, #fef3c7)',
-                                border: '1px solid #fcd34d',
-                                borderRadius: '32px', // More rounded
-                                padding: isMobile ? '24px' : '32px',
-                                marginBottom: '32px',
-                                fontSize: isMobile ? '14px' : '15px',
-                                color: '#92400e',
-                                lineHeight: '1.7',
-                                boxShadow: '0 8px 24px rgba(251, 191, 36, 0.08)'
-                            }}>
-                                <p style={{ marginBottom: '12px' }}>
-                                    The hackathon event takes place on <strong>Friday and Saturday</strong>.
-                                </p>
-                                <ul style={{ paddingLeft: '20px', margin: '0 0 16px 0', display: 'flex', flexDirection: 'column', gap: '6px' }}>
-                                    <li>The <strong>₹200 accommodation fee</strong> is applicable <strong>only for Thursday night stay</strong> (pre-event accommodation).</li>
-                                    <li>Accommodation for <strong>Friday night</strong> is already included in the <strong>registration fee</strong> and does <strong>not require any additional payment</strong>.</li>
-                                    <li>Please select <strong>“Need Accommodation”</strong> only if you require <strong>Thursday night stay</strong>.</li>
-                                </ul>
-                            </div>
-                            <div style={{ display: 'flex', flexDirection: 'column', gap: '32px' }}>
-                                <div style={{
-                                    padding: '20px',
-                                    background: 'rgba(236, 72, 153, 0.03)',
-                                    borderRadius: '24px',
-                                    border: '1px solid rgba(236, 72, 153, 0.1)'
-                                }}>
-                                    <p style={{ color: '#0f172a', fontSize: '15px', fontWeight: 700, marginBottom: '16px', display: 'flex', alignItems: 'center', gap: '10px' }}>
-                                        ACCOMMODATION FOR TEAM MEMBER 1 ({formData.leader.name || 'Team Member 1'})
-                                    </p>
-                                    <div style={{ display: 'flex', gap: '16px' }}>
-                                        {['Yes', 'No'].map(opt => (
-                                            <button
-                                                key={opt}
-                                                type="button"
-                                                onClick={() => setFormData(prev => ({ ...prev, leaderAccommodation: opt as any }))}
-                                                style={{
-                                                    flex: 1,
-                                                    padding: '16px 24px',
-                                                    borderRadius: '100px', // Pill shape
-                                                    border: formData.leaderAccommodation === opt
-                                                        ? '2px solid transparent'
-                                                        : '2px solid rgba(226, 232, 240, 0.8)',
-                                                    background: formData.leaderAccommodation === opt
-                                                        ? 'linear-gradient(135deg, #ec4899, #f43f5e)'
-                                                        : 'white',
-                                                    fontWeight: 800,
-                                                    cursor: 'pointer',
-                                                    transition: 'all 0.4s cubic-bezier(0.16, 1, 0.3, 1)',
-                                                    fontSize: '14px',
-                                                    color: formData.leaderAccommodation === opt ? 'white' : '#64748b',
-                                                    boxShadow: formData.leaderAccommodation === opt
-                                                        ? '0 10px 25px -5px rgba(236, 72, 153, 0.4)'
-                                                        : '0 4px 12px rgba(0,0,0,0.03)'
-                                                }}
-                                            >
-                                                {opt === 'Yes' ? '✓ Need' : '✗ No'}
-                                            </button>
-                                        ))}
-                                    </div>
-                                </div>
-
-                                {formData.member.name.trim() && (
-                                    <div style={{
-                                        padding: '20px',
-                                        background: 'rgba(236, 72, 153, 0.03)',
-                                        borderRadius: '24px',
-                                        border: '1px solid rgba(236, 72, 153, 0.1)'
+                                        fontSize: isMobile ? '11px' : '13px',
+                                        transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+                                        boxShadow: '0 8px 24px rgba(0, 0, 0, 0.05)',
+                                        overflow: 'hidden',
+                                        position: 'relative'
                                     }}>
-                                        <p style={{ color: '#0f172a', fontSize: '15px', fontWeight: 700, marginBottom: '16px', display: 'flex', alignItems: 'center', gap: '10px' }}>
-                                            ACCOMMODATION FOR TEAM MEMBER 2 ({formData.member.name || 'Team Member 2'})
-                                        </p>
-                                        <div style={{ display: 'flex', gap: '16px' }}>
-                                            {['Yes', 'No'].map(opt => (
-                                                <button
-                                                    key={opt}
-                                                    type="button"
-                                                    onClick={() => setFormData(prev => ({ ...prev, memberAccommodation: opt as any }))}
-                                                    style={{
-                                                        flex: 1,
-                                                        padding: '16px 24px',
-                                                        borderRadius: '100px', // Pill shape
-                                                        border: formData.memberAccommodation === opt
-                                                            ? '2px solid transparent'
-                                                            : '2px solid rgba(226, 232, 240, 0.8)',
-                                                        background: formData.memberAccommodation === opt
-                                                            ? 'linear-gradient(135deg, #ec4899, #f43f5e)'
-                                                            : 'white',
-                                                        fontWeight: 800,
-                                                        cursor: 'pointer',
-                                                        transition: 'all 0.4s cubic-bezier(0.16, 1, 0.3, 1)',
-                                                        fontSize: '14px',
-                                                        color: formData.memberAccommodation === opt ? 'white' : '#64748b',
-                                                        boxShadow: formData.memberAccommodation === opt
-                                                            ? '0 10px 25px -5px rgba(236, 72, 153, 0.4)'
-                                                            : '0 4px 12px rgba(0,0,0,0.03)'
-                                                    }}
-                                                >
-                                                    {opt === 'Yes' ? '✓ Need' : '✗ No'}
-                                                </button>
-                                            ))}
-                                        </div>
+                                        <ArrowLeft size={isMobile ? 18 : 16} />
+                                    </Link>
+                                </motion.div>
+                            )}
+                        </AnimatePresence>
+
+                        <div style={{ maxWidth: '900px', margin: '0 auto', position: 'relative', zIndex: 1 }}>
+
+                            {/* Header */}
+                            <motion.div
+                                initial={{ opacity: 0, y: 20 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                transition={{ duration: 0.6 }}
+                                style={{ textAlign: 'center', marginBottom: '60px' }}
+                            >
+                                <div style={{
+                                    display: 'inline-flex',
+                                    alignItems: 'center',
+                                    gap: '12px',
+                                    background: 'white',
+                                    border: '1px solid rgba(239, 68, 68, 0.2)',
+                                    padding: isMobile ? '8px 16px' : '12px 24px',
+                                    borderRadius: '100px', // Pill shape for deadline
+                                    marginBottom: isMobile ? '24px' : '40px',
+                                    boxShadow: '0 10px 30px -5px rgba(239, 68, 68, 0.1), 0 0 0 1px rgba(239, 68, 68, 0.1) inset'
+                                }}>
+                                    <img src={sirenIcon} alt="Siren" style={{ width: isMobile ? '18px' : '24px', height: isMobile ? '18px' : '24px', animation: 'pulse 2s infinite', objectFit: 'contain' }} />
+                                    <div style={{ textAlign: 'left' }}>
+                                        <div style={{ color: '#0f172a', fontWeight: 800, fontSize: isMobile ? '10px' : '13px', textTransform: 'uppercase', letterSpacing: '0.04em' }}>Registration Closes: <span style={{ color: '#ef4444' }}>Feb 4</span></div>
                                     </div>
-                                )}
+                                </div>
 
-                                <p style={{ color: '#64748b', fontSize: '13px', fontStyle: 'italic', margin: 0 }}>
-                                    Note: On-campus accommodation is available at ₹200 per person. Total fee will adjust automatically.
-                                </p>
-                            </div>
-                        </motion.div>
-
-                        {/* Mentor Details */}
-                        <motion.div
-                            initial={{ opacity: 0, y: 30 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            transition={{ delay: 0.6 }}
-                            style={cardStyle}
-                        >
-                            {renderSectionHeader("Mentor Details", regMentor, true)}
-                            <div style={{
-                                background: 'linear-gradient(135deg, #f1f5f9, #e2e8f0)',
-                                padding: '24px',
-                                borderRadius: '32px', // More rounded
-                                marginBottom: '32px',
-                                border: '1px solid rgba(203, 213, 225, 0.5)',
-                                color: '#475569',
-                                fontSize: '15px',
-                                fontWeight: 500,
-                                lineHeight: '1.6'
-                            }}>
-                                If your team has an assigned mentor or faculty guide, you can provide their details below.
-                            </div>
-                            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '24px' }}>
-                                <div style={{ display: 'flex', flexDirection: 'column' }}>
-                                    <label style={{
-                                        fontSize: '14px',
-                                        fontWeight: 700,
-                                        color: '#475569',
-                                        marginBottom: '12px',
-                                        letterSpacing: '0.02em',
-                                        textTransform: 'uppercase'
-                                    }}>Mentor Name</label>
-                                    <input
-                                        type="text"
-                                        value={formData.mentor.name}
-                                        onChange={(e) => setFormData(prev => ({ ...prev, mentor: { ...prev.mentor, name: e.target.value } }))}
-                                        style={{ ...inputStyle('mentor.name'), border: '2px solid rgba(226, 232, 240, 0.8)' }}
-                                        placeholder="Dr. John Doe"
-                                    />
-                                </div>
-                                <div style={{ display: 'flex', flexDirection: 'column' }}>
-                                    <label style={{
-                                        fontSize: '14px',
-                                        fontWeight: 700,
-                                        color: '#475569',
-                                        marginBottom: '12px',
-                                        letterSpacing: '0.02em',
-                                        textTransform: 'uppercase'
-                                    }}>Mentor Phone</label>
-                                    <input
-                                        type="tel"
-                                        value={formData.mentor.phone}
-                                        onChange={(e) => {
-                                            const val = e.target.value.replace(/\D/g, '').slice(0, 10);
-                                            setFormData(prev => ({ ...prev, mentor: { ...prev.mentor, phone: val } }));
-                                        }}
-                                        style={{ ...inputStyle('mentor.phone'), border: '2px solid rgba(226, 232, 240, 0.8)' }}
-                                        placeholder="10-digit number"
-                                    />
-                                </div>
-                                <div style={{ display: 'flex', flexDirection: 'column' }}>
-                                    <label style={{
-                                        fontSize: '14px',
-                                        fontWeight: 700,
-                                        color: '#475569',
-                                        marginBottom: '12px',
-                                        letterSpacing: '0.02em',
-                                        textTransform: 'uppercase'
-                                    }}>Mentor Gender</label>
-                                    <select
-                                        value={formData.mentor.gender}
-                                        onChange={(e) => setFormData(prev => ({ ...prev, mentor: { ...prev.mentor, gender: e.target.value } }))}
-                                        style={selectStyle}
-                                    >
-                                        <option value="">Select Gender</option>
-                                        {genderOptions.map(g => <option key={g} value={g}>{g}</option>)}
-                                    </select>
-                                </div>
-                                <div style={{ display: 'flex', flexDirection: 'column' }}>
-                                    <label style={{
-                                        fontSize: '14px',
-                                        fontWeight: 700,
-                                        color: '#475569',
-                                        marginBottom: '12px',
-                                        letterSpacing: '0.02em',
-                                        textTransform: 'uppercase'
-                                    }}>Designation</label>
-                                    <input
-                                        type="text"
-                                        value={formData.mentor.designation}
-                                        onChange={(e) => setFormData(prev => ({ ...prev, mentor: { ...prev.mentor, designation: e.target.value } }))}
-                                        style={{ ...inputStyle('mentor.designation'), border: '2px solid rgba(226, 232, 240, 0.8)' }}
-                                        placeholder="e.g. Assistant Professor"
-                                    />
-                                </div>
-                            </div>
-                            <div style={{ marginTop: '24px' }}>
-                                <div style={{ display: 'flex', flexDirection: 'column' }}>
-                                    <label style={{
-                                        fontSize: '14px',
-                                        fontWeight: 700,
-                                        color: '#475569',
-                                        marginBottom: '12px',
-                                        letterSpacing: '0.02em',
-                                        textTransform: 'uppercase'
-                                    }}>Organization / College</label>
-                                    <input
-                                        type="text"
-                                        value={formData.mentor.organization}
-                                        onChange={(e) => setFormData(prev => ({ ...prev, mentor: { ...prev.mentor, organization: e.target.value } }))}
-                                        style={{ ...inputStyle('mentor.organization'), border: '2px solid rgba(226, 232, 240, 0.8)' }}
-                                        placeholder="Full organization name"
-                                    />
-                                </div>
-                            </div>
-                        </motion.div>
-
-                        {/* Payment Details */}
-                        <motion.div
-                            initial={{ opacity: 0, y: 30 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            transition={{ delay: 0.7 }}
-                            style={cardStyle}
-                        >
-                            {renderSectionHeader("Payment & Verification", regPayment, true)}
-                            <div style={{
-                                marginTop: isMobile ? '20px' : '28px',
-                                padding: isMobile ? '16px 20px' : '28px',
-                                background: 'linear-gradient(135deg, #f8fafc, #f1f5f9)',
-                                borderRadius: isMobile ? '20px' : '28px',
-                                display: 'flex',
-                                justifyContent: 'space-between',
-                                alignItems: 'center',
-                                border: '1px solid rgba(226, 232, 240, 0.8)',
-                                flexWrap: 'wrap',
-                                gap: '12px',
-                                marginBottom: '24px'
-                            }}>
-                                <div>
-                                    <p style={{ fontSize: isMobile ? '13px' : '15px', color: '#64748b', fontWeight: 600 }}>Total Payable Amount</p>
-                                    <p style={{ fontSize: isMobile ? '11px' : '13px', color: '#94a3b8', marginTop: '4px' }}>
-                                        Base: ₹250 × {formData.member.name.trim() ? 2 : 1}
-                                        {(formData.leaderAccommodation === 'Yes' || formData.memberAccommodation === 'Yes') && (
-                                            <> + Accom: ₹200 × {(formData.leaderAccommodation === 'Yes' ? 1 : 0) + (formData.member.name.trim() && formData.memberAccommodation === 'Yes' ? 1 : 0)}</>
-                                        )}
-                                    </p>
-                                </div>
-                                <span style={{
-                                    fontSize: isMobile ? '24px' : '32px',
+                                <h1 style={{
+                                    fontSize: 'clamp(32px, 5vw, 48px)', // Slightly reduced from 36px, 6vw, 56px
                                     fontWeight: 900,
+                                    marginBottom: '20px',
                                     background: 'linear-gradient(135deg, #0f172a, #334155)',
                                     WebkitBackgroundClip: 'text',
-                                    WebkitTextFillColor: 'transparent'
-                                }}>₹{formData.totalFee}</span>
-                            </div>
+                                    WebkitTextFillColor: 'transparent',
+                                    letterSpacing: '-0.03em'
+                                }}>
+                                    Team Registration
+                                </h1>
+                                <p style={{
+                                    color: '#64748b',
+                                    fontSize: isMobile ? '14px' : '18px',
+                                    maxWidth: '700px',
+                                    margin: '0 auto',
+                                    lineHeight: 1.7
+                                }}>
+                                    An ISO certified institution dedicated to excellence in engineering education,
+                                    fostering innovation and professional integrity to shape a sustainable future.
+                                </p>
+                            </motion.div>
 
-                            <div style={{
-                                background: 'linear-gradient(135deg, #ffffff, #f1f5f9)',
-                                padding: isMobile ? '24px' : '40px',
-                                borderRadius: '48px', // Ultra rounded payment box
-                                marginBottom: '32px',
-                                border: '1px solid rgba(226, 232, 240, 0.8)',
-                                boxShadow: '0 15px 40px -10px rgba(0,0,0,0.05)'
-                            }}>
-                                <div style={{ display: 'flex', alignItems: 'flex-start', gap: isMobile ? '12px' : '20px' }}>
-                                    <div style={{
-                                        background: 'white',
-                                        padding: isMobile ? '12px' : '16px',
-                                        borderRadius: '16px',
-                                        boxShadow: '0 8px 24px rgba(37, 99, 235, 0.15)',
-                                        flexShrink: 0
-                                    }}>
-                                        <ShieldCheck size={isMobile ? 22 : 28} style={{ color: '#2563eb' }} />
+                            <form onSubmit={handleSubmit}>
+                                {/* Team Identity */}
+                                <motion.div
+                                    initial={{ opacity: 0, y: 30 }}
+                                    animate={{ opacity: 1, y: 0 }}
+                                    transition={{ delay: 0.1 }}
+                                    style={cardStyle}
+                                >
+                                    {renderSectionHeader("Team Identity", regTrophy, true)}
+                                    {renderInput("Team Name", "teamName", null, "text", "Enter a unique name for your team")}
+                                </motion.div>
+
+                                {/* Team Leader */}
+                                <motion.div
+                                    initial={{ opacity: 0, y: 30 }}
+                                    animate={{ opacity: 1, y: 0 }}
+                                    transition={{ delay: 0.2 }}
+                                    style={cardStyle}
+                                >
+                                    {renderSectionHeader("Team Member 1 Details", regLeader, true)}
+                                    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '24px' }}>
+                                        {renderInput("Full Name", "name", "leader", "text", "Team Member 1's full name")}
+                                        {renderInput("Mobile Number", "phone", "leader", "tel", "10-digit mobile number")}
+                                        {renderInput("Email ID", "email", "leader", "email", "personal@email.com")}
+                                        {renderInput("Department", "dept", "leader", "text", "e.g. Computer Science")}
                                     </div>
-                                    <div style={{ flex: 1 }}>
-                                        <p style={{ color: '#1e40af', fontWeight: 800, fontSize: isMobile ? '16px' : '20px', marginBottom: '4px' }}>Secure Payment Process</p>
-                                        <p style={{ color: '#3b82f6', fontSize: isMobile ? '13px' : '15px', lineHeight: '1.5' }}>
-                                            To finalize your registration, please pay <strong>₹{formData.totalFee}</strong>.
-                                            Scan the UPI ID using GPay, PhonePe, or Paytm.
+                                    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '24px', marginTop: '24px' }}>
+                                        {renderInput("College Name", "college", "leader", "text", "Full institution name")}
+                                        <div style={{ display: 'flex', flexDirection: 'column' }}>
+                                            <label style={{
+                                                fontSize: '14px',
+                                                fontWeight: 700,
+                                                color: '#475569',
+                                                marginBottom: '12px',
+                                                letterSpacing: '0.02em',
+                                                textTransform: 'uppercase'
+                                            }}>Gender <span style={{ color: '#22c55e' }}>*</span></label>
+                                            <select
+                                                required
+                                                value={formData.leader.gender}
+                                                onChange={(e) => setFormData(prev => ({ ...prev, leader: { ...prev.leader, gender: e.target.value } }))}
+                                                style={selectStyle}
+                                            >
+                                                <option value="">Select Gender</option>
+                                                {genderOptions.map(g => <option key={g} value={g}>{g}</option>)}
+                                            </select>
+                                        </div>
+                                    </div>
+                                </motion.div>
+
+                                {/* Team Member */}
+                                <motion.div
+                                    initial={{ opacity: 0, y: 30 }}
+                                    animate={{ opacity: 1, y: 0 }}
+                                    transition={{ delay: 0.3 }}
+                                    style={cardStyle}
+                                >
+                                    {renderSectionHeader("Team Member 2 Details", regUsers, true)}
+                                    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '24px' }}>
+                                        {renderInput("Full Name", "name", "member", "text", "Team Member 2's full name", false)}
+                                        {renderInput("Mobile Number", "phone", "member", "tel", "10-digit mobile number", false)}
+                                        {renderInput("Email ID", "email", "member", "email", "personal@email.com", false)}
+                                        {renderInput("Department", "dept", "member", "text", "e.g. Computer Science", false)}
+                                    </div>
+                                    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '24px', marginTop: '24px' }}>
+                                        {renderInput("College Name", "college", "member", "text", "Full institution name", false)}
+                                        <div style={{ display: 'flex', flexDirection: 'column' }}>
+                                            <label style={{
+                                                fontSize: '14px',
+                                                fontWeight: 700,
+                                                color: '#475569',
+                                                marginBottom: '12px',
+                                                letterSpacing: '0.02em',
+                                                textTransform: 'uppercase'
+                                            }}>Gender</label>
+                                            <select
+                                                required={false}
+                                                value={formData.member.gender}
+                                                onChange={(e) => setFormData(prev => ({ ...prev, member: { ...prev.member, gender: e.target.value } }))}
+                                                style={selectStyle}
+                                            >
+                                                <option value="">Select Gender</option>
+                                                {genderOptions.map(g => <option key={g} value={g}>{g}</option>)}
+                                            </select>
+                                        </div>
+                                    </div>
+                                </motion.div>
+
+                                {/* Location & Travel */}
+                                <motion.div
+                                    initial={{ opacity: 0, y: 30 }}
+                                    animate={{ opacity: 1, y: 0 }}
+                                    transition={{ delay: 0.4 }}
+                                    style={cardStyle}
+                                >
+                                    {renderSectionHeader("Location & Arrival Details", regLocation, true)}
+                                    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '24px' }}>
+                                        {renderInput("District of College", "collegeDistrict", null, "text", "e.g. Coimbatore")}
+                                        {renderInput("College Pincode", "collegePincode", null, "text", "6-digit pincode")}
+                                        {renderInput("Arrival Date", "expectedArrivalDate", null, "date")}
+                                        <div style={{ display: 'flex', flexDirection: 'column' }}>
+                                            <label style={{
+                                                fontSize: '14px',
+                                                fontWeight: 700,
+                                                color: '#475569',
+                                                marginBottom: '12px',
+                                                letterSpacing: '0.02em',
+                                                textTransform: 'uppercase'
+                                            }}>Arrival Time <span style={{ color: '#22c55e' }}>*</span></label>
+                                            <div style={{ display: 'flex', gap: '8px' }}>
+                                                {/* Hour Select */}
+                                                <select
+                                                    value={formData.expectedArrivalTime.split(':')[0] || '12'}
+                                                    onChange={(e) => {
+                                                        const parts = formData.expectedArrivalTime.split(':');
+                                                        const mins = parts[1]?.split(' ')[0] || '00';
+                                                        const ampm = parts[1]?.split(' ')[1] || 'AM';
+                                                        setFormData(prev => ({ ...prev, expectedArrivalTime: `${e.target.value}:${mins} ${ampm}` }));
+                                                    }}
+                                                    style={{ ...selectStyle, flex: 1, padding: '10px' }}
+                                                >
+                                                    {Array.from({ length: 12 }, (_, i) => (i + 1).toString().padStart(2, '0')).map(h => (
+                                                        <option key={h} value={h}>{h}</option>
+                                                    ))}
+                                                </select>
+
+                                                {/* Minute Select */}
+                                                <select
+                                                    value={formData.expectedArrivalTime.split(':')[1]?.split(' ')[0] || '00'}
+                                                    onChange={(e) => {
+                                                        const parts = formData.expectedArrivalTime.split(':');
+                                                        const hour = parts[0] || '12';
+                                                        const ampm = parts[1]?.split(' ')[1] || 'AM';
+                                                        setFormData(prev => ({ ...prev, expectedArrivalTime: `${hour}:${e.target.value} ${ampm}` }));
+                                                    }}
+                                                    style={{ ...selectStyle, flex: 1, padding: '10px' }}
+                                                >
+                                                    {Array.from({ length: 12 }, (_, i) => (i * 5).toString().padStart(2, '0')).map(m => (
+                                                        <option key={m} value={m}>{m}</option>
+                                                    ))}
+                                                </select>
+
+                                                {/* AM/PM Select */}
+                                                <select
+                                                    value={formData.expectedArrivalTime.split(' ')[1] || 'AM'}
+                                                    onChange={(e) => {
+                                                        const parts = formData.expectedArrivalTime.split(' ')[0] || '12:00';
+                                                        setFormData(prev => ({ ...prev, expectedArrivalTime: `${parts} ${e.target.value}` }));
+                                                    }}
+                                                    style={{ ...selectStyle, flex: 1, padding: '10px' }}
+                                                >
+                                                    <option value="AM">AM</option>
+                                                    <option value="PM">PM</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </motion.div>
+
+                                {/* Accommodation */}
+                                <motion.div
+                                    initial={{ opacity: 0, y: 30 }}
+                                    animate={{ opacity: 1, y: 0 }}
+                                    transition={{ delay: 0.5 }}
+                                    style={cardStyle}
+                                >
+                                    {renderSectionHeader("Accommodation", regAccommodation, true)}
+                                    <div style={{
+                                        background: 'linear-gradient(135deg, #fffbeb, #fef3c7)',
+                                        border: '1px solid #fcd34d',
+                                        borderRadius: '32px', // More rounded
+                                        padding: isMobile ? '24px' : '32px',
+                                        marginBottom: '32px',
+                                        fontSize: isMobile ? '14px' : '15px',
+                                        color: '#92400e',
+                                        lineHeight: '1.7',
+                                        boxShadow: '0 8px 24px rgba(251, 191, 36, 0.08)'
+                                    }}>
+                                        <p style={{ marginBottom: '12px' }}>
+                                            The hackathon event takes place on <strong>Friday and Saturday</strong>.
+                                        </p>
+                                        <ul style={{ paddingLeft: '20px', margin: '0 0 16px 0', display: 'flex', flexDirection: 'column', gap: '6px' }}>
+                                            <li>The <strong>₹200 accommodation fee</strong> is applicable <strong>only for Thursday night stay</strong> (pre-event accommodation).</li>
+                                            <li>Accommodation for <strong>Friday night</strong> is already included in the <strong>registration fee</strong> and does <strong>not require any additional payment</strong>.</li>
+                                            <li>Please select <strong>“Need Accommodation”</strong> only if you require <strong>Thursday night stay</strong>.</li>
+                                        </ul>
+                                    </div>
+                                    <div style={{ display: 'flex', flexDirection: 'column', gap: '32px' }}>
+                                        <div style={{
+                                            padding: '20px',
+                                            background: 'rgba(236, 72, 153, 0.03)',
+                                            borderRadius: '24px',
+                                            border: '1px solid rgba(236, 72, 153, 0.1)'
+                                        }}>
+                                            <p style={{ color: '#0f172a', fontSize: '15px', fontWeight: 700, marginBottom: '16px', display: 'flex', alignItems: 'center', gap: '10px' }}>
+                                                ACCOMMODATION FOR TEAM MEMBER 1 ({formData.leader.name || 'Team Member 1'})
+                                            </p>
+                                            <div style={{ display: 'flex', gap: '16px' }}>
+                                                {['Yes', 'No'].map(opt => (
+                                                    <button
+                                                        key={opt}
+                                                        type="button"
+                                                        onClick={() => setFormData(prev => ({ ...prev, leaderAccommodation: opt as any }))}
+                                                        style={{
+                                                            flex: 1,
+                                                            padding: '16px 24px',
+                                                            borderRadius: '100px', // Pill shape
+                                                            border: formData.leaderAccommodation === opt
+                                                                ? '2px solid transparent'
+                                                                : '2px solid rgba(226, 232, 240, 0.8)',
+                                                            background: formData.leaderAccommodation === opt
+                                                                ? 'linear-gradient(135deg, #ec4899, #f43f5e)'
+                                                                : 'white',
+                                                            fontWeight: 800,
+                                                            cursor: 'pointer',
+                                                            transition: 'all 0.4s cubic-bezier(0.16, 1, 0.3, 1)',
+                                                            fontSize: '14px',
+                                                            color: formData.leaderAccommodation === opt ? 'white' : '#64748b',
+                                                            boxShadow: formData.leaderAccommodation === opt
+                                                                ? '0 10px 25px -5px rgba(236, 72, 153, 0.4)'
+                                                                : '0 4px 12px rgba(0,0,0,0.03)'
+                                                        }}
+                                                    >
+                                                        {opt === 'Yes' ? '✓ Need' : '✗ No'}
+                                                    </button>
+                                                ))}
+                                            </div>
+                                        </div>
+
+                                        {formData.member.name.trim() && (
+                                            <div style={{
+                                                padding: '20px',
+                                                background: 'rgba(236, 72, 153, 0.03)',
+                                                borderRadius: '24px',
+                                                border: '1px solid rgba(236, 72, 153, 0.1)'
+                                            }}>
+                                                <p style={{ color: '#0f172a', fontSize: '15px', fontWeight: 700, marginBottom: '16px', display: 'flex', alignItems: 'center', gap: '10px' }}>
+                                                    ACCOMMODATION FOR TEAM MEMBER 2 ({formData.member.name || 'Team Member 2'})
+                                                </p>
+                                                <div style={{ display: 'flex', gap: '16px' }}>
+                                                    {['Yes', 'No'].map(opt => (
+                                                        <button
+                                                            key={opt}
+                                                            type="button"
+                                                            onClick={() => setFormData(prev => ({ ...prev, memberAccommodation: opt as any }))}
+                                                            style={{
+                                                                flex: 1,
+                                                                padding: '16px 24px',
+                                                                borderRadius: '100px', // Pill shape
+                                                                border: formData.memberAccommodation === opt
+                                                                    ? '2px solid transparent'
+                                                                    : '2px solid rgba(226, 232, 240, 0.8)',
+                                                                background: formData.memberAccommodation === opt
+                                                                    ? 'linear-gradient(135deg, #ec4899, #f43f5e)'
+                                                                    : 'white',
+                                                                fontWeight: 800,
+                                                                cursor: 'pointer',
+                                                                transition: 'all 0.4s cubic-bezier(0.16, 1, 0.3, 1)',
+                                                                fontSize: '14px',
+                                                                color: formData.memberAccommodation === opt ? 'white' : '#64748b',
+                                                                boxShadow: formData.memberAccommodation === opt
+                                                                    ? '0 10px 25px -5px rgba(236, 72, 153, 0.4)'
+                                                                    : '0 4px 12px rgba(0,0,0,0.03)'
+                                                            }}
+                                                        >
+                                                            {opt === 'Yes' ? '✓ Need' : '✗ No'}
+                                                        </button>
+                                                    ))}
+                                                </div>
+                                            </div>
+                                        )}
+
+                                        <p style={{ color: '#64748b', fontSize: '13px', fontStyle: 'italic', margin: 0 }}>
+                                            Note: On-campus accommodation is available at ₹200 per person. Total fee will adjust automatically.
                                         </p>
                                     </div>
-                                </div>
+                                </motion.div>
 
-                                <div style={{
-                                    marginTop: '24px',
-                                    padding: '24px',
-                                    background: 'linear-gradient(135deg, #ffffff, #f8fafc)',
-                                    borderRadius: '24px',
-                                    border: '1px solid #e2e8f0',
-                                    display: 'flex',
-                                    flexDirection: 'column',
-                                    gap: '20px'
-                                }}>
-                                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '20px' }}>
-                                        <div style={{ flex: '1 1 200px' }}>
-                                            <p style={{ fontSize: isMobile ? '10px' : '11px', color: '#94a3b8', textTransform: 'uppercase', letterSpacing: '1px', fontWeight: 800, marginBottom: '4px' }}>UPI Payment Details</p>
-                                            <p style={{
-                                                fontWeight: 900,
-                                                color: '#0f172a',
-                                                fontSize: isMobile ? '13px' : '18px',
-                                                letterSpacing: '0.01em',
-                                                marginBottom: '6px',
-                                                lineHeight: 1.3
-                                            }}>prasathkumartvb@okaxis</p>
-                                            <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
-                                                <div style={{ display: 'flex', alignItems: 'center', gap: '6px', color: '#475569', fontSize: isMobile ? '12px' : '14px', fontWeight: 600 }}>
-                                                    <div style={{ width: '4px', height: '4px', borderRadius: '50%', background: '#3b82f6' }}></div>
-                                                    Prasathkumar V
+                                {/* Mentor Details */}
+                                <motion.div
+                                    initial={{ opacity: 0, y: 30 }}
+                                    animate={{ opacity: 1, y: 0 }}
+                                    transition={{ delay: 0.6 }}
+                                    style={cardStyle}
+                                >
+                                    {renderSectionHeader("Mentor Details", regMentor, true)}
+                                    <div style={{
+                                        background: 'linear-gradient(135deg, #f1f5f9, #e2e8f0)',
+                                        padding: '24px',
+                                        borderRadius: '32px', // More rounded
+                                        marginBottom: '32px',
+                                        border: '1px solid rgba(203, 213, 225, 0.5)',
+                                        color: '#475569',
+                                        fontSize: '15px',
+                                        fontWeight: 500,
+                                        lineHeight: '1.6'
+                                    }}>
+                                        If your team has an assigned mentor or faculty guide, you can provide their details below.
+                                    </div>
+                                    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '24px' }}>
+                                        <div style={{ display: 'flex', flexDirection: 'column' }}>
+                                            <label style={{
+                                                fontSize: '14px',
+                                                fontWeight: 700,
+                                                color: '#475569',
+                                                marginBottom: '12px',
+                                                letterSpacing: '0.02em',
+                                                textTransform: 'uppercase'
+                                            }}>Mentor Name</label>
+                                            <input
+                                                type="text"
+                                                value={formData.mentor.name}
+                                                onChange={(e) => setFormData(prev => ({ ...prev, mentor: { ...prev.mentor, name: e.target.value } }))}
+                                                style={{ ...inputStyle('mentor.name'), border: '2px solid rgba(226, 232, 240, 0.8)' }}
+                                                placeholder="Dr. John Doe"
+                                            />
+                                        </div>
+                                        <div style={{ display: 'flex', flexDirection: 'column' }}>
+                                            <label style={{
+                                                fontSize: '14px',
+                                                fontWeight: 700,
+                                                color: '#475569',
+                                                marginBottom: '12px',
+                                                letterSpacing: '0.02em',
+                                                textTransform: 'uppercase'
+                                            }}>Mentor Phone</label>
+                                            <input
+                                                type="tel"
+                                                value={formData.mentor.phone}
+                                                onChange={(e) => {
+                                                    const val = e.target.value.replace(/\D/g, '').slice(0, 10);
+                                                    setFormData(prev => ({ ...prev, mentor: { ...prev.mentor, phone: val } }));
+                                                }}
+                                                style={{ ...inputStyle('mentor.phone'), border: '2px solid rgba(226, 232, 240, 0.8)' }}
+                                                placeholder="10-digit number"
+                                            />
+                                        </div>
+                                        <div style={{ display: 'flex', flexDirection: 'column' }}>
+                                            <label style={{
+                                                fontSize: '14px',
+                                                fontWeight: 700,
+                                                color: '#475569',
+                                                marginBottom: '12px',
+                                                letterSpacing: '0.02em',
+                                                textTransform: 'uppercase'
+                                            }}>Mentor Gender</label>
+                                            <select
+                                                value={formData.mentor.gender}
+                                                onChange={(e) => setFormData(prev => ({ ...prev, mentor: { ...prev.mentor, gender: e.target.value } }))}
+                                                style={selectStyle}
+                                            >
+                                                <option value="">Select Gender</option>
+                                                {genderOptions.map(g => <option key={g} value={g}>{g}</option>)}
+                                            </select>
+                                        </div>
+                                        <div style={{ display: 'flex', flexDirection: 'column' }}>
+                                            <label style={{
+                                                fontSize: '14px',
+                                                fontWeight: 700,
+                                                color: '#475569',
+                                                marginBottom: '12px',
+                                                letterSpacing: '0.02em',
+                                                textTransform: 'uppercase'
+                                            }}>Designation</label>
+                                            <input
+                                                type="text"
+                                                value={formData.mentor.designation}
+                                                onChange={(e) => setFormData(prev => ({ ...prev, mentor: { ...prev.mentor, designation: e.target.value } }))}
+                                                style={{ ...inputStyle('mentor.designation'), border: '2px solid rgba(226, 232, 240, 0.8)' }}
+                                                placeholder="e.g. Assistant Professor"
+                                            />
+                                        </div>
+                                    </div>
+                                    <div style={{ marginTop: '24px' }}>
+                                        <div style={{ display: 'flex', flexDirection: 'column' }}>
+                                            <label style={{
+                                                fontSize: '14px',
+                                                fontWeight: 700,
+                                                color: '#475569',
+                                                marginBottom: '12px',
+                                                letterSpacing: '0.02em',
+                                                textTransform: 'uppercase'
+                                            }}>Organization / College</label>
+                                            <input
+                                                type="text"
+                                                value={formData.mentor.organization}
+                                                onChange={(e) => setFormData(prev => ({ ...prev, mentor: { ...prev.mentor, organization: e.target.value } }))}
+                                                style={{ ...inputStyle('mentor.organization'), border: '2px solid rgba(226, 232, 240, 0.8)' }}
+                                                placeholder="Full organization name"
+                                            />
+                                        </div>
+                                    </div>
+                                </motion.div>
+
+                                {/* Payment Details */}
+                                <motion.div
+                                    initial={{ opacity: 0, y: 30 }}
+                                    animate={{ opacity: 1, y: 0 }}
+                                    transition={{ delay: 0.7 }}
+                                    style={cardStyle}
+                                >
+                                    {renderSectionHeader("Payment & Verification", regPayment, true)}
+                                    <div style={{
+                                        marginTop: isMobile ? '20px' : '28px',
+                                        padding: isMobile ? '16px 20px' : '28px',
+                                        background: 'linear-gradient(135deg, #f8fafc, #f1f5f9)',
+                                        borderRadius: isMobile ? '20px' : '28px',
+                                        display: 'flex',
+                                        justifyContent: 'space-between',
+                                        alignItems: 'center',
+                                        border: '1px solid rgba(226, 232, 240, 0.8)',
+                                        flexWrap: 'wrap',
+                                        gap: '12px',
+                                        marginBottom: '24px'
+                                    }}>
+                                        <div>
+                                            <p style={{ fontSize: isMobile ? '13px' : '15px', color: '#64748b', fontWeight: 600 }}>Total Payable Amount</p>
+                                            <p style={{ fontSize: isMobile ? '11px' : '13px', color: '#94a3b8', marginTop: '4px' }}>
+                                                Base: ₹250 × {formData.member.name.trim() ? 2 : 1}
+                                                {(formData.leaderAccommodation === 'Yes' || formData.memberAccommodation === 'Yes') && (
+                                                    <> + Accom: ₹200 × {(formData.leaderAccommodation === 'Yes' ? 1 : 0) + (formData.member.name.trim() && formData.memberAccommodation === 'Yes' ? 1 : 0)}</>
+                                                )}
+                                            </p>
+                                        </div>
+                                        <span style={{
+                                            fontSize: isMobile ? '24px' : '32px',
+                                            fontWeight: 900,
+                                            background: 'linear-gradient(135deg, #0f172a, #334155)',
+                                            WebkitBackgroundClip: 'text',
+                                            WebkitTextFillColor: 'transparent'
+                                        }}>₹{formData.totalFee}</span>
+                                    </div>
+
+                                    <div style={{
+                                        background: 'linear-gradient(135deg, #ffffff, #f1f5f9)',
+                                        padding: isMobile ? '24px' : '40px',
+                                        borderRadius: '48px', // Ultra rounded payment box
+                                        marginBottom: '32px',
+                                        border: '1px solid rgba(226, 232, 240, 0.8)',
+                                        boxShadow: '0 15px 40px -10px rgba(0,0,0,0.05)'
+                                    }}>
+                                        <div style={{ display: 'flex', alignItems: 'flex-start', gap: isMobile ? '12px' : '20px' }}>
+                                            <div style={{
+                                                background: 'white',
+                                                padding: isMobile ? '12px' : '16px',
+                                                borderRadius: '16px',
+                                                boxShadow: '0 8px 24px rgba(37, 99, 235, 0.15)',
+                                                flexShrink: 0
+                                            }}>
+                                                <ShieldCheck size={isMobile ? 22 : 28} style={{ color: '#2563eb' }} />
+                                            </div>
+                                            <div style={{ flex: 1 }}>
+                                                <p style={{ color: '#1e40af', fontWeight: 800, fontSize: isMobile ? '16px' : '20px', marginBottom: '4px' }}>Secure Payment Process</p>
+                                                <p style={{ color: '#3b82f6', fontSize: isMobile ? '13px' : '15px', lineHeight: '1.5' }}>
+                                                    To finalize your registration, please pay <strong>₹{formData.totalFee}</strong>.
+                                                    Scan the UPI ID using GPay, PhonePe, or Paytm.
+                                                </p>
+                                            </div>
+                                        </div>
+
+                                        <div style={{
+                                            marginTop: '24px',
+                                            padding: '24px',
+                                            background: 'linear-gradient(135deg, #ffffff, #f8fafc)',
+                                            borderRadius: '24px',
+                                            border: '1px solid #e2e8f0',
+                                            display: 'flex',
+                                            flexDirection: 'column',
+                                            gap: '20px'
+                                        }}>
+                                            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '20px' }}>
+                                                <div style={{ flex: '1 1 200px' }}>
+                                                    <p style={{ fontSize: isMobile ? '10px' : '11px', color: '#94a3b8', textTransform: 'uppercase', letterSpacing: '1px', fontWeight: 800, marginBottom: '4px' }}>UPI Payment Details</p>
+                                                    <p style={{
+                                                        fontWeight: 900,
+                                                        color: '#0f172a',
+                                                        fontSize: isMobile ? '13px' : '18px',
+                                                        letterSpacing: '0.01em',
+                                                        marginBottom: '6px',
+                                                        lineHeight: 1.3
+                                                    }}>prasathkumartvb@okaxis</p>
+                                                    <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
+                                                        <div style={{ display: 'flex', alignItems: 'center', gap: '6px', color: '#475569', fontSize: isMobile ? '12px' : '14px', fontWeight: 600 }}>
+                                                            <div style={{ width: '4px', height: '4px', borderRadius: '50%', background: '#3b82f6' }}></div>
+                                                            Prasathkumar V
+                                                        </div>
+                                                        <div style={{ display: 'flex', alignItems: 'center', gap: '6px', color: '#475569', fontSize: isMobile ? '12px' : '14px', fontWeight: 600 }}>
+                                                            <div style={{ width: '4px', height: '4px', borderRadius: '50%', background: '#3b82f6' }}></div>
+                                                            +91 9095330712
+                                                        </div>
+                                                    </div>
                                                 </div>
-                                                <div style={{ display: 'flex', alignItems: 'center', gap: '6px', color: '#475569', fontSize: isMobile ? '12px' : '14px', fontWeight: 600 }}>
-                                                    <div style={{ width: '4px', height: '4px', borderRadius: '50%', background: '#3b82f6' }}></div>
-                                                    +91 9095330712
+                                                <div style={{
+                                                    padding: '10px 18px',
+                                                    background: 'linear-gradient(135deg, #f0f9ff, #e0f2fe)',
+                                                    borderRadius: '12px',
+                                                    display: 'flex',
+                                                    alignItems: 'center',
+                                                    justifyContent: 'center',
+                                                    gap: '8px',
+                                                    color: '#0284c7',
+                                                    fontSize: '13px',
+                                                    fontWeight: 800,
+                                                    boxShadow: '0 4px 12px -2px rgba(2, 132, 199, 0.1)',
+                                                    width: 'fit-content'
+                                                }}>
+                                                    <Smartphone size={16} /> GPay / PhonePe / Paytm
+                                                </div>
+                                            </div>
+
+                                            <div style={{
+                                                padding: isMobile ? '24px' : '40px',
+                                                background: '#f8fafc',
+                                                borderRadius: '48px', // Ultra rounded QR container
+                                                border: '1px solid #e2e8f0',
+                                                display: 'flex',
+                                                flexDirection: 'column',
+                                                alignItems: 'center',
+                                                gap: isMobile ? '20px' : '32px',
+                                                boxShadow: 'inset 0 2px 10px rgba(0,0,0,0.02)'
+                                            }}>
+                                                <div style={{
+                                                    padding: '8px',
+                                                    background: 'white',
+                                                    borderRadius: isMobile ? '14px' : '20px',
+                                                    boxShadow: '0 10px 25px -5px rgba(0,0,0,0.1)',
+                                                    border: '1px solid #e2e8f0',
+                                                    maxWidth: isMobile ? '140px' : '180px',
+                                                    width: '100%'
+                                                }}>
+                                                    <img
+                                                        src={paymentQr}
+                                                        alt="Payment QR Code"
+                                                        style={{
+                                                            width: '100%',
+                                                            height: 'auto',
+                                                            display: 'block',
+                                                            borderRadius: '12px'
+                                                        }}
+                                                    />
+                                                </div>
+                                                <div style={{ textAlign: 'center' }}>
+                                                    <p style={{ fontWeight: 800, color: '#0f172a', fontSize: isMobile ? '14px' : '16px', marginBottom: '4px' }}>Scan to Pay</p>
+                                                    <p style={{ fontSize: isMobile ? '12px' : '14px', color: '#64748b', fontWeight: 500 }}>Open any UPI app to scan and complete payment</p>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div style={{
-                                            padding: '10px 18px',
-                                            background: 'linear-gradient(135deg, #f0f9ff, #e0f2fe)',
-                                            borderRadius: '12px',
-                                            display: 'flex',
-                                            alignItems: 'center',
-                                            justifyContent: 'center',
-                                            gap: '8px',
-                                            color: '#0284c7',
-                                            fontSize: '13px',
-                                            fontWeight: 800,
-                                            boxShadow: '0 4px 12px -2px rgba(2, 132, 199, 0.1)',
-                                            width: 'fit-content'
-                                        }}>
-                                            <Smartphone size={16} /> GPay / PhonePe / Paytm
-                                        </div>
                                     </div>
 
                                     <div style={{
-                                        padding: isMobile ? '24px' : '40px',
-                                        background: '#f8fafc',
-                                        borderRadius: '48px', // Ultra rounded QR container
-                                        border: '1px solid #e2e8f0',
+                                        background: 'rgba(34, 197, 94, 0.03)',
+                                        padding: isMobile ? '16px' : '24px',
+                                        borderRadius: isMobile ? '16px' : '24px',
+                                        border: '1px solid rgba(34, 197, 94, 0.1)',
+                                        marginBottom: isMobile ? '20px' : '28px'
+                                    }}>
+                                        <h4 style={{ color: '#166534', fontSize: isMobile ? '13px' : '15px', fontWeight: 800, marginBottom: '8px', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Payment Guidelines</h4>
+                                        <ul style={{ margin: 0, paddingLeft: '16px', color: '#166534', fontSize: isMobile ? '12px' : '14px', fontWeight: 600, display: 'flex', flexDirection: 'column', gap: isMobile ? '4px' : '8px' }}>
+                                            <li>Registration fee via QR linked to secure UPI.</li>
+                                            <li>Scan the UPI ID above using any UPI app.</li>
+                                            <li>Payment screenshot is required for entry.</li>
+                                            <li>Applicable for event fee and accommodation.</li>
+                                        </ul>
+                                    </div>
+
+                                    {renderInput("Transaction ID / Reference Number", "transactionId", null, "text", "12-digit UPI Ref No (e.g. 4029...)")}
+                                </motion.div>
+
+                                {/* Submit Section */}
+                                <motion.div
+                                    initial={{ opacity: 0, y: 30 }}
+                                    animate={{ opacity: 1, y: 0 }}
+                                    transition={{ delay: 0.8 }}
+                                    style={{
                                         display: 'flex',
                                         flexDirection: 'column',
                                         alignItems: 'center',
-                                        gap: isMobile ? '20px' : '32px',
-                                        boxShadow: 'inset 0 2px 10px rgba(0,0,0,0.02)'
-                                    }}>
-                                        <div style={{
-                                            padding: '8px',
-                                            background: 'white',
-                                            borderRadius: isMobile ? '14px' : '20px',
-                                            boxShadow: '0 10px 25px -5px rgba(0,0,0,0.1)',
-                                            border: '1px solid #e2e8f0',
-                                            maxWidth: isMobile ? '140px' : '180px',
-                                            width: '100%'
-                                        }}>
-                                            <img
-                                                src={paymentQr}
-                                                alt="Payment QR Code"
-                                                style={{
-                                                    width: '100%',
-                                                    height: 'auto',
-                                                    display: 'block',
-                                                    borderRadius: '12px'
-                                                }}
-                                            />
-                                        </div>
-                                        <div style={{ textAlign: 'center' }}>
-                                            <p style={{ fontWeight: 800, color: '#0f172a', fontSize: isMobile ? '14px' : '16px', marginBottom: '4px' }}>Scan to Pay</p>
-                                            <p style={{ fontSize: isMobile ? '12px' : '14px', color: '#64748b', fontWeight: 500 }}>Open any UPI app to scan and complete payment</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div style={{
-                                background: 'rgba(34, 197, 94, 0.03)',
-                                padding: isMobile ? '16px' : '24px',
-                                borderRadius: isMobile ? '16px' : '24px',
-                                border: '1px solid rgba(34, 197, 94, 0.1)',
-                                marginBottom: isMobile ? '20px' : '28px'
-                            }}>
-                                <h4 style={{ color: '#166534', fontSize: isMobile ? '13px' : '15px', fontWeight: 800, marginBottom: '8px', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Payment Guidelines</h4>
-                                <ul style={{ margin: 0, paddingLeft: '16px', color: '#166534', fontSize: isMobile ? '12px' : '14px', fontWeight: 600, display: 'flex', flexDirection: 'column', gap: isMobile ? '4px' : '8px' }}>
-                                    <li>Registration fee via QR linked to secure UPI.</li>
-                                    <li>Scan the UPI ID above using any UPI app.</li>
-                                    <li>Payment screenshot is required for entry.</li>
-                                    <li>Applicable for event fee and accommodation.</li>
-                                </ul>
-                            </div>
-
-                            {renderInput("Transaction ID / Reference Number", "transactionId", null, "text", "12-digit UPI Ref No (e.g. 4029...)")}
-                        </motion.div>
-
-                        {/* Submit Section */}
-                        <motion.div
-                            initial={{ opacity: 0, y: 30 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            transition={{ delay: 0.8 }}
-                            style={{
-                                display: 'flex',
-                                flexDirection: 'column',
-                                alignItems: 'center',
-                                gap: isMobile ? '12px' : '20px',
-                                padding: isMobile ? '24px 0' : '40px 0'
-                            }}
-                        >
-                            {accepted ? (
-                                <div style={{ display: 'flex', alignItems: 'center', gap: '20px', flexWrap: 'wrap', justifyContent: 'center' }}>
-                                    <div style={{
-                                        padding: isMobile ? '8px 16px' : '14px 28px',
-                                        background: 'linear-gradient(135deg, #f0fdf4, #dcfce7)',
-                                        borderRadius: '100px',
-                                        border: isMobile ? '1px solid #22c55e' : '2px solid #22c55e',
-                                        display: 'flex',
-                                        alignItems: 'center',
-                                        gap: isMobile ? '8px' : '12px',
-                                        color: '#166534',
-                                        fontSize: isMobile ? '13px' : '15px',
-                                        fontWeight: 700,
-                                        boxShadow: '0 4px 20px rgba(34, 197, 94, 0.15)'
-                                    }}>
-                                        <CheckCircle size={isMobile ? 16 : 20} /> Rules Accepted
-                                    </div>
-                                    <button
-                                        type="button"
-                                        onClick={() => setShowRulesModal(true)}
-                                        style={{
-                                            color: '#64748b',
-                                            background: 'none',
-                                            border: 'none',
-                                            fontSize: '14px',
-                                            fontWeight: 600,
-                                            cursor: 'pointer',
-                                            textDecoration: 'underline'
-                                        }}
-                                    >
-                                        Read Again
-                                    </button>
-                                </div>
-                            ) : (
-                                <button
-                                    type="button"
-                                    onClick={() => setShowRulesModal(true)}
-                                    style={{
-                                        color: '#004ee0',
-                                        background: 'rgba(255, 255, 255, 0.8)',
-                                        border: '1px solid rgba(0, 78, 224, 0.2)',
-                                        borderRadius: '100px',
-                                        padding: '12px 24px',
-                                        fontSize: '13px',
-                                        fontWeight: 700,
-                                        cursor: 'pointer',
-                                        display: 'flex',
-                                        alignItems: 'center',
-                                        justifyContent: 'center',
-                                        gap: '8px',
-                                        transition: 'all 0.3s ease',
-                                        boxShadow: '0 4px 12px rgba(0, 78, 224, 0.05)'
+                                        gap: isMobile ? '12px' : '20px',
+                                        padding: isMobile ? '24px 0' : '40px 0'
                                     }}
                                 >
-                                    <FileText size={14} />
-                                    Read Requirements & Accept Rules to register
-                                </button>
-                            )}
+                                    {accepted ? (
+                                        <div style={{ display: 'flex', alignItems: 'center', gap: '20px', flexWrap: 'wrap', justifyContent: 'center' }}>
+                                            <div style={{
+                                                padding: isMobile ? '8px 16px' : '14px 28px',
+                                                background: 'linear-gradient(135deg, #f0fdf4, #dcfce7)',
+                                                borderRadius: '100px',
+                                                border: isMobile ? '1px solid #22c55e' : '2px solid #22c55e',
+                                                display: 'flex',
+                                                alignItems: 'center',
+                                                gap: isMobile ? '8px' : '12px',
+                                                color: '#166534',
+                                                fontSize: isMobile ? '13px' : '15px',
+                                                fontWeight: 700,
+                                                boxShadow: '0 4px 20px rgba(34, 197, 94, 0.15)'
+                                            }}>
+                                                <CheckCircle size={isMobile ? 16 : 20} /> Rules Accepted
+                                            </div>
+                                            <button
+                                                type="button"
+                                                onClick={() => setShowRulesModal(true)}
+                                                style={{
+                                                    color: '#64748b',
+                                                    background: 'none',
+                                                    border: 'none',
+                                                    fontSize: '14px',
+                                                    fontWeight: 600,
+                                                    cursor: 'pointer',
+                                                    textDecoration: 'underline'
+                                                }}
+                                            >
+                                                Read Again
+                                            </button>
+                                        </div>
+                                    ) : (
+                                        <button
+                                            type="button"
+                                            onClick={() => setShowRulesModal(true)}
+                                            style={{
+                                                color: '#004ee0',
+                                                background: 'rgba(255, 255, 255, 0.8)',
+                                                border: '1px solid rgba(0, 78, 224, 0.2)',
+                                                borderRadius: '100px',
+                                                padding: '12px 24px',
+                                                fontSize: '13px',
+                                                fontWeight: 700,
+                                                cursor: 'pointer',
+                                                display: 'flex',
+                                                alignItems: 'center',
+                                                justifyContent: 'center',
+                                                gap: '8px',
+                                                transition: 'all 0.3s ease',
+                                                boxShadow: '0 4px 12px rgba(0, 78, 224, 0.05)'
+                                            }}
+                                        >
+                                            <FileText size={14} />
+                                            Read Requirements & Accept Rules to register
+                                        </button>
+                                    )}
 
-                            <button
-                                type="submit"
-                                disabled={isSubmitting || !accepted}
-                                style={{
-                                    width: 'fit-content',
-                                    minWidth: isMobile ? '140px' : '200px',
-                                    padding: isMobile ? '8px 20px' : '14px 28px',
-                                    fontSize: isMobile ? '14px' : '15px',
-                                    fontWeight: 800,
-                                    borderRadius: '100px',
-                                    background: accepted
-                                        ? 'linear-gradient(135deg, #004ee0 0%, #1883ff 50%, #22c55e 100%)'
-                                        : '#94a3b8',
-                                    color: 'white',
-                                    border: 'none',
-                                    cursor: accepted ? 'pointer' : 'not-allowed',
-                                    opacity: accepted ? 1 : 0.6,
-                                    display: 'flex',
-                                    alignItems: 'center',
-                                    justifyContent: 'center',
-                                    gap: isMobile ? '6px' : '12px',
-                                    boxShadow: accepted
-                                        ? '0 20px 50px -10px rgba(0, 78, 224, 0.4)'
-                                        : 'none',
-                                    transition: 'all 0.4s cubic-bezier(0.16, 1, 0.3, 1)',
-                                    letterSpacing: '0.04em',
-                                    textTransform: 'uppercase'
-                                }}
-                            >
-                                {isSubmitting ? (
-                                    <>
-                                        <div style={{
-                                            width: '22px',
-                                            height: '22px',
-                                            border: '3px solid rgba(255,255,255,0.3)',
-                                            borderTopColor: 'white',
-                                            borderRadius: '50%',
-                                            animation: 'spin 1s linear infinite'
-                                        }} />
-                                        Processing...
-                                    </>
-                                ) : (
-                                    <>
-                                        Register Team
-                                    </>
-                                )}
-                            </button>
+                                    <button
+                                        type="submit"
+                                        disabled={isSubmitting || !accepted}
+                                        style={{
+                                            width: 'fit-content',
+                                            minWidth: isMobile ? '140px' : '200px',
+                                            padding: isMobile ? '8px 20px' : '14px 28px',
+                                            fontSize: isMobile ? '14px' : '15px',
+                                            fontWeight: 800,
+                                            borderRadius: '100px',
+                                            background: accepted
+                                                ? 'linear-gradient(135deg, #004ee0 0%, #1883ff 50%, #22c55e 100%)'
+                                                : '#94a3b8',
+                                            color: 'white',
+                                            border: 'none',
+                                            cursor: accepted ? 'pointer' : 'not-allowed',
+                                            opacity: accepted ? 1 : 0.6,
+                                            display: 'flex',
+                                            alignItems: 'center',
+                                            justifyContent: 'center',
+                                            gap: isMobile ? '6px' : '12px',
+                                            boxShadow: accepted
+                                                ? '0 20px 50px -10px rgba(0, 78, 224, 0.4)'
+                                                : 'none',
+                                            transition: 'all 0.4s cubic-bezier(0.16, 1, 0.3, 1)',
+                                            letterSpacing: '0.04em',
+                                            textTransform: 'uppercase'
+                                        }}
+                                    >
+                                        {isSubmitting ? (
+                                            <>
+                                                <div style={{
+                                                    width: '22px',
+                                                    height: '22px',
+                                                    border: '3px solid rgba(255,255,255,0.3)',
+                                                    borderTopColor: 'white',
+                                                    borderRadius: '50%',
+                                                    animation: 'spin 1s linear infinite'
+                                                }} />
+                                                Processing...
+                                            </>
+                                        ) : (
+                                            <>
+                                                Register Team
+                                            </>
+                                        )}
+                                    </button>
 
-                            {!accepted && (
-                                <p style={{ fontSize: '14px', color: '#94a3b8', textAlign: 'center' }}>
-                                    Please accept the rules to enable registration
-                                </p>
-                            )}
-                        </motion.div>
-                    </form>
-                </div>
+                                    {!accepted && (
+                                        <p style={{ fontSize: '14px', color: '#94a3b8', textAlign: 'center' }}>
+                                            Please accept the rules to enable registration
+                                        </p>
+                                    )}
+                                </motion.div>
+                            </form>
+                        </div>
 
-                <style>{`
-                    @keyframes spin {
-                        to { transform: rotate(360deg); }
-                    }
-                `}</style>
+                        <style>{`
+                            @keyframes spin {
+                                to { transform: rotate(360deg); }
+                            }
+                        `}</style>
+                    </>
+                )}
             </section>
         </>
     );
